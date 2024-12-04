@@ -42,20 +42,47 @@ class ViewController: UIViewController, UITextFieldDelegate{
             }
             
             else if button == signInButton{
-                if !(isValidEmail(email: emailTextField.text!)) || !(isValidPass(password: passwordTextField.text!)){
+                let validEmail = isValidEmail(email: emailTextField.text!)
+                let validPass = isValidPass(password: passwordTextField.text!)
+                if (validEmail == false) || (validPass == false){
                     //POP UP SCREEN (ERROR)
-                    print("error!")
-                    
+                    var alertController = UIAlertController()
+                    if (validEmail == false){
+                        alertController = UIAlertController(title: "Error", message: "Invalid Email", preferredStyle: .alert)
+                    }
+                    else if (validPass == false){
+                        alertController = UIAlertController(title: "Error", message: "Invalid Password", preferredStyle: .alert)
+                    }
+                    let okAction = UIAlertAction(title: "OK", style: .default) { _ in
+                        // Handle OK button tap
+                        if validPass == false{
+                            self.passwordTextField.text = ""
+                        }
+                    }
+
+                    alertController.addAction(okAction)
+                    present(alertController, animated: true, completion: nil)
                 }
                 else{
-                    //MOVE TO NEW SCREEN
-                    print("valid!")
+                    
+                    //create Alert
+                    let successAlertController = UIAlertController(title: "Success", message: "You've Logged In!", preferredStyle: .alert)
+                    //add action (next)
+                    let nextAction = UIAlertAction(title: "Next", style: .default){ _ in
+                            //MOVE TO NEW SCREEN
+                        self.performSegue(withIdentifier: "logInSuccess", sender: nil)
+                    }
+                    successAlertController.addAction(nextAction)
+                    present(successAlertController, animated: true, completion: nil)
                 }
             }
+            
             else if button == rememberMeButton{
                 if rememberMeButton.isSelected == false{
-                    
                     rememberMeButton.isSelected = true
+                    UserDefaults.standard.set(emailTextField.text, forKey: "userEmail")
+                    UserDefaults.standard.set(passwordTextField.text, forKey: "userPassword")
+                    
                 }
                 else{
                     rememberMeButton.isSelected = false
@@ -70,13 +97,17 @@ class ViewController: UIViewController, UITextFieldDelegate{
         let myColour = UIColor.systemBlue
         if let textField = sender as? UITextField {
             if textField == passwordTextField{
-                passwordLabel.textColor = .systemBlue
-                eyeIconButton.isHidden = false
-                eyeIconButton.isEnabled = true
+                    passwordLabel.textColor = .systemBlue
+                    eyeIconButton.isHidden = false
+                    eyeIconButton.isEnabled = true
             }
             
             else if textField == emailTextField{
-                emailLabel.textColor = .systemBlue
+                let existingEmail = UserDefaults.standard.string(forKey: "userEmail")
+                if existingEmail != nil{
+                    print(existingEmail!)
+                }
+                    emailLabel.textColor = .systemBlue
             }
             textField.layer.cornerRadius = 4
             textField.layer.borderWidth = 2
