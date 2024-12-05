@@ -7,140 +7,103 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITextFieldDelegate{
+class ViewController: UIViewController {
     
-    
+    // IBoutlet
     @IBOutlet weak var emailLabel: UILabel!
-    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var emailTextField: UITextField! {
+        didSet {
+            emailTextField.layer.cornerRadius = 4
+            emailTextField.layer.borderWidth = 1
+            emailTextField.layer.borderColor = UIColor(red: 207/255, green: 207/255, blue: 207/255, alpha: 1).cgColor
+        }
+    }
     @IBOutlet weak var passwordLabel: UILabel!
-    @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var eyeIconButton: UIButton!
+    @IBOutlet weak var passwordTextField: UITextField! {
+        didSet {
+            passwordTextField.layer.cornerRadius = 4
+            passwordTextField.layer.borderWidth = 1
+            passwordTextField.layer.borderColor = UIColor(red: 207/255, green: 207/255, blue: 207/255, alpha: 1).cgColor
+        }
+    }
     @IBOutlet weak var signInButton: UIButton!
-    
     @IBOutlet weak var rememberMeButton: UIButton!
-    
+    @IBOutlet weak var eyebtn: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         passwordTextField.delegate = self
         emailTextField.delegate = self
+        setupRememberMeBtnOnStartup()
     }
     
-    @IBAction func buttonClicked(_ sender: Any) {
-        if let button = sender as? UIButton{
-            
-          
-            if button == eyeIconButton{
-                if eyeIconButton.isSelected{
-                    eyeIconButton.isSelected = false
-                    passwordTextField.isSecureTextEntry = true
-                }
-                else{
-                    eyeIconButton.isSelected = true
-                    passwordTextField.isSecureTextEntry = false
-                }
-            }
-            
-            else if button == signInButton{
-                let validEmail = isValidEmail(email: emailTextField.text!)
-                let validPass = isValidPass(password: passwordTextField.text!)
-                if (validEmail == false) || (validPass == false){
-                    //POP UP SCREEN (ERROR)
-                    var alertController = UIAlertController()
-                    if (validEmail == false){
-                        alertController = UIAlertController(title: "Error", message: "Invalid Email", preferredStyle: .alert)
-                    }
-                    else if (validPass == false){
-                        alertController = UIAlertController(title: "Error", message: "Invalid Password", preferredStyle: .alert)
-                    }
-                    let okAction = UIAlertAction(title: "OK", style: .default) { _ in
-                        // Handle OK button tap
-                        if validPass == false{
-                            self.passwordTextField.text = ""
-                        }
-                    }
-
-                    alertController.addAction(okAction)
-                    present(alertController, animated: true, completion: nil)
-                }
-                else{
-                    
-                    //create Alert
-                    let successAlertController = UIAlertController(title: "Success", message: "You've Logged In!", preferredStyle: .alert)
-                    //add action (next)
-                    let nextAction = UIAlertAction(title: "Next", style: .default){ _ in
-                            //MOVE TO NEW SCREEN
-                        self.performSegue(withIdentifier: "logInSuccess", sender: nil)
-                    }
-                    successAlertController.addAction(nextAction)
-                    present(successAlertController, animated: true, completion: nil)
-                }
-            }
-            
-            else if button == rememberMeButton{
-                if rememberMeButton.isSelected == false{
-                    rememberMeButton.isSelected = true
-                    UserDefaults.standard.set(emailTextField.text, forKey: "userEmail")
-                    UserDefaults.standard.set(passwordTextField.text, forKey: "userPassword")
-                    
-                }
-                else{
-                    rememberMeButton.isSelected = false
-                }
-            }
-        }
-    }
+    // MARK: - Variables & Constants
+    let customBlue = UIColor(red: 39/255, green: 82/255, blue: 231/255, alpha: 1)
+    let customBlack = UIColor(red: 17/255, green: 17/255, blue: 17/255, alpha: 1)
     
-    
-    @IBAction func textFieldEditingBegin(_ sender: Any) {
-        //make changes to text field when user starts input
-        let myColour = UIColor.systemBlue
-        if let textField = sender as? UITextField {
-            if textField == passwordTextField{
-                    passwordLabel.textColor = .systemBlue
-                    eyeIconButton.isHidden = false
-                    eyeIconButton.isEnabled = true
-            }
-            
-            else if textField == emailTextField{
-                let existingEmail = UserDefaults.standard.string(forKey: "userEmail")
-                if existingEmail != nil{
-                    print(existingEmail!)
-                }
-                    emailLabel.textColor = .systemBlue
-            }
-            textField.layer.cornerRadius = 4
-            textField.layer.borderWidth = 2
-            textField.layer.borderColor = myColour.cgColor
-            
-        }
-    }
-    
-    @IBAction func textFieldEditingEnd(_ sender: Any) {
-        if let textField = sender as? UITextField {
-            if textField == passwordTextField{
-                passwordLabel.textColor = .black
-            }
-            else if textField == emailTextField{
-                emailLabel.textColor = .black
-            }
-            textField.layer.cornerRadius = 0
-            textField.layer.borderWidth = 0
-            textField.layer.borderColor = UIColor.clear.cgColor        }
+    enum ValidationResult {
+        case success
+        case invalidEmail
+        case invalidPassword
         
-    }
-    
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if textField == passwordTextField{
-            let charAfterUse = textField.text!.count + 1
-            // user not allowed to enter Space and characters > 8
-            if (charAfterUse > 8) || (string == " "){
-                return false
+        var message: String {
+            switch self {
+            case .success:
+                return "You've logged In"
+            case .invalidEmail:
+                return "Invalid Email"
+            case .invalidPassword:
+                return "Invalid Password"
             }
         }
-        return true
     }
     
+    // MARK: - Helper Funcions
+    
+    func setupRememberMeBtnOnStartup() {
+        if let email = UserDefaults.standard.value(forKey: "userEmail") as? String , let password = UserDefaults.standard.value(forKey: "userPassword") as? String {
+            rememberMeButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+            emailTextField.text = email
+            passwordTextField.text = password
+            rememberMeButton.tag = 1
+        }
+    }
+
+    func validateFields(email: String, password: String) -> ValidationResult {
+        if isValidEmail(email: email) {
+            if isValidPass(password: password) {
+                return .success
+            } else {
+                passwordTextField.text = ""
+                passwordTextField.becomeFirstResponder()
+                return .invalidPassword
+            }
+        } else {
+            emailTextField.text = ""
+            emailTextField.becomeFirstResponder()
+            return .invalidEmail
+        }
+    }
+
+    func showPopup(result: ValidationResult) {
+        if result == .success {
+            let successAlertController = UIAlertController(title: "Success", message: result.message, preferredStyle: .alert)
+            let nextAction = UIAlertAction(title: "Next", style: .default) { _ in
+                self.naviagteToHomeScreen()
+            }
+            successAlertController.addAction(nextAction)
+            present(successAlertController, animated: true, completion: nil)
+        } else {
+            let successAlertController = UIAlertController(title: "Error", message: result.message, preferredStyle: .alert)
+            let nextAction = UIAlertAction(title: "Ok", style: .default)
+            successAlertController.addAction(nextAction)
+            present(successAlertController, animated: true, completion: nil)
+        }
+    }
+    
+    func naviagteToHomeScreen() {
+        self.performSegue(withIdentifier: "logInSuccess", sender: nil)
+    }
     
     func isValidEmail(email: String) -> Bool {
         let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
@@ -149,7 +112,6 @@ class ViewController: UIViewController, UITextFieldDelegate{
     }
     
     func isValidPass(password: String) -> Bool{
-        
         //check for atleast one special character
         var regexPass = ".*[^A-Za-z0-9].*"
         let predicateSpecialChar = NSPredicate(format:"SELF MATCHES %@", regexPass)
@@ -163,14 +125,82 @@ class ViewController: UIViewController, UITextFieldDelegate{
         //check for atleast one integer
         let numbersRange = password.rangeOfCharacter(from: .decimalDigits)
         let hasNumbers = (numbersRange != nil)
-        if ((!hasSpecialCharacter) || (!hasNumbers) || (!hasUpperCase)){
+        if ((hasSpecialCharacter == false) || (hasNumbers == false) || (hasUpperCase == false)) {
             return false
         }
         return true
     }
-
     
     
+    // MARK: - IBActions
+    @IBAction func signInBtnTapped(_ sender: UIButton) {
+        let errorResult = validateFields(email: emailTextField.text ?? "", password: passwordTextField.text ?? "")
+        showPopup(result: errorResult)
+    }
+    
+    @IBAction func rememberMeBtnTapped(_ sender: UIButton) {
+        if sender.tag == 0 {
+            UserDefaults.standard.set(emailTextField.text, forKey: "userEmail")
+            UserDefaults.standard.set(passwordTextField.text, forKey: "userPassword")
+            sender.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+            sender.tag = 1
+        } else {
+            UserDefaults.standard.removeObject(forKey: "userEmail")
+            UserDefaults.standard.removeObject(forKey: "userPassword")
+            sender.setImage(UIImage(systemName: "square"), for: .normal)
+            sender.tag = 0
+        }
+    }
+    
+    @IBAction func eyeBtnTapped(_ sender: UIButton) {
+        if sender.tag == 0 {
+            eyebtn.setImage(UIImage(systemName: "eye.slash"), for: .normal)
+            passwordTextField.isSecureTextEntry = false
+            sender.tag = 1
+        } else {
+            eyebtn.setImage(UIImage(systemName: "eye"), for: .normal)
+            passwordTextField.isSecureTextEntry = true
+            sender.tag = 0
+        }
+    }
+    
+    // MARK: - Textfield actions
+    
+    @IBAction func emailTextFieldEditingBegin(_ sender: UITextField) {
+        emailLabel.textColor = customBlue
+        sender.layer.borderColor = customBlue.cgColor
+    }
+    
+    @IBAction func passwordTextFieldEditingBegin(_ sender: UITextField) {
+        passwordLabel.textColor = customBlue
+        sender.layer.borderColor = customBlue.cgColor
+    }
+    
+    @IBAction func emailTextFieldEditingEnd(_ sender: UITextField) {
+        emailLabel.textColor = customBlack
+        sender.layer.borderColor = customBlack.cgColor
+    }
+    
+    @IBAction func passTextFieldEditingEnd(_ sender: UITextField) {
+        passwordLabel.textColor = customBlack
+        sender.layer.borderColor = customBlack.cgColor
+    }
+}
 
+
+// MARK: - Text field Delegates
+extension ViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if string == "" {
+            return true
+        }
+        if textField == passwordTextField{
+            let charAfterUse = textField.text!.count + 1
+            if (charAfterUse > 8) || (string == " ") {
+                return false
+            }
+        }
+        return true
+    }
 }
 
