@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "1INCH - 1INCH Token.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "1INCH - 1INCH Token@2x.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "1INCH - 1INCH Token@3x.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
