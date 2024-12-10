@@ -9,9 +9,7 @@ import UIKit
 
 class ViewController2: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    
     // MARK: - IBOutlets
-    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var portfolioBalanceLabel: UILabel!
     @IBOutlet weak var portfolioBalance: UILabel!
@@ -21,7 +19,7 @@ class ViewController2: UIViewController, UITableViewDelegate, UITableViewDataSou
         PortfolioItem(
             iconName: "ic-test",
             itemName: "USD Coin",
-            itemValue: "$0.00",
+            itemValue: "$12.3",
             detail: "0 USDC"
         ),
         PortfolioItem(
@@ -97,8 +95,7 @@ class ViewController2: UIViewController, UITableViewDelegate, UITableViewDataSou
             detail: "0 USDC"
         )
     ]
-    
-    
+
     // MARK: - Helper Functions
     
     override func viewDidLoad() {
@@ -122,25 +119,19 @@ class ViewController2: UIViewController, UITableViewDelegate, UITableViewDataSou
             }
             totalBalance += valueNumeric
         }
-        portfolioBalance.text = "$\(totalBalance)"
+        let totalBalanceStr = String(format: "%.2f", totalBalance)
+        portfolioBalance.text = totalBalanceStr
     }
     
     // MARK: - Data source functions
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return sampleData.count
     }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       // return sampleData.count
-        return 1
-    }
-    
-    
+ 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 48
+        return UITableView.automaticDimension
     }
-    
+  
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
         headerView.backgroundColor = view.backgroundColor
@@ -155,9 +146,9 @@ class ViewController2: UIViewController, UITableViewDelegate, UITableViewDataSou
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell") as? CustomCell else {
             return CustomCell()
         }
-        //let currSampleData = sampleData[indexPath.row]
-        let currSampleData = sampleData[indexPath.section]
+        let currSampleData = sampleData[indexPath.row]
         cell.updateCells(model: currSampleData)
+        cell.layoutIfNeeded()
         return cell
     }
 }
