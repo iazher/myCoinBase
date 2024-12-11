@@ -59,7 +59,6 @@ class ViewController: UIViewController {
     }
     
     // MARK: - Helper Funcions
-    
     func setupRememberMeBtnOnStartup() {
         if let email = UserDefaults.standard.value(forKey: "userEmail") as? String , let password = UserDefaults.standard.value(forKey: "userPassword") as? String {
             rememberMeButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)

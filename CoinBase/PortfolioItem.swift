@@ -7,7 +7,7 @@
 
 import Foundation
 
-class PortfolioItem{
+class PortfolioItem {
     
     // MARK: - Variables
     var iconName: String    // image view

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController2: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ViewController2: UIViewController {
     
     // MARK: - IBOutlets
     @IBOutlet weak var tableView: UITableView!
@@ -95,7 +95,7 @@ class ViewController2: UIViewController, UITableViewDelegate, UITableViewDataSou
             detail: "0 USDC"
         )
     ]
-
+    
     // MARK: - Helper Functions
     
     override func viewDidLoad() {
@@ -123,15 +123,41 @@ class ViewController2: UIViewController, UITableViewDelegate, UITableViewDataSou
         portfolioBalance.text = totalBalanceStr
     }
     
-    // MARK: - Data source functions
+    // navigates to next screen (displays cell information) based on the cell selected by user
+    func navigateToScreen(_ identifier: String) {
+        self.performSegue(withIdentifier: identifier, sender: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "TableViewNextScreen" {
+            if let indexPath = self.tableView.indexPathForSelectedRow {
+                if let destinationVC = segue.destination as? ViewController3 {
+                    destinationVC.delegate = self
+                    destinationVC.index = indexPath.row
+                    destinationVC.indexPath = indexPath // for closure
+                    let cellData = sampleData[indexPath.row]
+                    destinationVC.initModel(model: cellData)
+                    destinationVC.returnIndex = { (index) in
+                        let indexPath = IndexPath(row: index, section: 0)
+                        self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                    }
+                }
+            }
+        }
+    }
+}
+    // MARK: - Delegate and Data source functions
+
+extension ViewController2: UITableViewDelegate, UITableViewDataSource{
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return sampleData.count
     }
- 
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
-  
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
         headerView.backgroundColor = view.backgroundColor
@@ -150,5 +176,16 @@ class ViewController2: UIViewController, UITableViewDelegate, UITableViewDataSou
         cell.updateCells(model: currSampleData)
         cell.layoutIfNeeded()
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.navigateToScreen("TableViewNextScreen")
+    }
+}
+
+extension ViewController2: ViewController3Delegate {
+    func didUpdateRowData(at index: Int) {
+        let indexPath = IndexPath(row: index, section: 0)
+        self.tableView.reloadRows(at: [indexPath], with: .automatic)
     }
 }

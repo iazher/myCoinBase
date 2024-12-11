@@ -19,7 +19,7 @@ class CustomCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        super.isHighlighted = false
+        super.selectionStyle = .none
     }
     
     override func layoutSubviews() {
@@ -29,7 +29,6 @@ class CustomCell: UITableViewCell {
     }
 
     func updateCells(model: PortfolioItem) {
-        print(model.iconName)
         iconImageView.image = UIImage(named: model.iconName)
         titleLabel.text = model.itemName
         valueLabel.text = model.itemValue
