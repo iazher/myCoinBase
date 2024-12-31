@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DoMoreCollectionViewCell" id="gTV-IL-0wX" customClass="DoMoreCollectionViewCell" customModule="CoinBase" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="314" height="194"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="314" height="194"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lsu-E2-si9">
+                        <rect key="frame" x="16" y="24" width="283" height="37"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LAq-mF-1Je">
+                                <rect key="frame" x="0.0" y="0.0" width="36.666666666666664" height="16.333333333333332"/>
+                                <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="14"/>
+                                <color key="textColor" red="0.1529411765" green="0.32156862749999998" blue="0.90588235289999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="39A-Wp-JgW">
+                                <rect key="frame" x="0.0" y="18.333333333333336" width="283" height="18.666666666666664"/>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="16"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="39A-Wp-JgW" firstAttribute="top" secondItem="LAq-mF-1Je" secondAttribute="bottom" constant="2" id="2ip-9w-kBT"/>
+                            <constraint firstAttribute="bottom" secondItem="39A-Wp-JgW" secondAttribute="bottom" id="AdM-4v-SYG"/>
+                            <constraint firstItem="LAq-mF-1Je" firstAttribute="leading" secondItem="lsu-E2-si9" secondAttribute="leading" id="If9-f0-ylo"/>
+                            <constraint firstItem="LAq-mF-1Je" firstAttribute="top" secondItem="lsu-E2-si9" secondAttribute="top" id="M41-K6-OV0"/>
+                            <constraint firstItem="39A-Wp-JgW" firstAttribute="leading" secondItem="lsu-E2-si9" secondAttribute="leading" id="p0l-6L-ciB"/>
+                            <constraint firstAttribute="trailing" secondItem="39A-Wp-JgW" secondAttribute="trailing" id="z2n-Hg-eBY"/>
+                        </constraints>
+                    </view>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Earn rewards icon" translatesAutoresizingMaskIntoConstraints="NO" id="Akq-ao-ldZ">
+                        <rect key="frame" x="212" y="98" width="81" height="72"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="72" id="FgY-Vi-x94"/>
+                            <constraint firstAttribute="width" constant="81" id="UmP-mP-faZ"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstItem="lsu-E2-si9" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="24" id="3eW-yA-tI5"/>
+                <constraint firstItem="lsu-E2-si9" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="16" id="LQU-ht-HQ6"/>
+                <constraint firstAttribute="trailing" secondItem="Akq-ao-ldZ" secondAttribute="trailing" constant="21" id="NeS-pO-2P8"/>
+                <constraint firstAttribute="bottom" secondItem="Akq-ao-ldZ" secondAttribute="bottom" constant="24" id="zFX-kZ-evg"/>
+                <constraint firstAttribute="trailing" secondItem="lsu-E2-si9" secondAttribute="trailing" constant="15" id="zaA-tc-ISR"/>
+            </constraints>
+            <connections>
+                <outlet property="detail" destination="39A-Wp-JgW" id="6VV-cb-cES"/>
+                <outlet property="title" destination="LAq-mF-1Je" id="UWD-5T-jPN"/>
+            </connections>
+            <point key="canvasLocation" x="94.656488549618317" y="19.718309859154932"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="Earn rewards icon" width="81" height="72.333335876464844"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

@@ -105,6 +105,17 @@ class ViewController2: UIViewController {
         portfolioBalanceSetup()
     }
     
+    func registerTableCells() {
+        //register custom cell
+        tableView.register(UINib(nibName: "PortfolioItemCell", bundle: nil), forCellReuseIdentifier: "PortfolioItemCell")
+  
+//        //register section header view
+//        onNetMinsTableView.register(UINib(nibName: "CustomHeader", bundle: nil), forHeaderFooterViewReuseIdentifier: "CustomHeader")
+//        
+        //table design
+        tableView.separatorStyle = .none
+    }
+    
     func portfolioBalanceSetup() {
         portfolioBalanceLabel.textColor = UIColor(red: 112/235, green: 112/235, blue: 112/235, alpha: 100)
         calculatePortfolioBalance()
@@ -169,8 +180,8 @@ extension ViewController2: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell") as? CustomCell else {
-            return CustomCell()
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "PortfolioItemCell") as? PortfolioItemCell else {
+            return PortfolioItemCell()
         }
         let currSampleData = sampleData[indexPath.row]
         cell.updateCells(model: currSampleData)

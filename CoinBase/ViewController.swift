@@ -9,6 +9,7 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    @IBOutlet weak var scrollViewSignIn: UIScrollView!
     // IBoutlet
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var emailTextField: UITextField! {
@@ -32,6 +33,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.isNavigationBarHidden = true
         passwordTextField.delegate = self
         emailTextField.delegate = self
         setupRememberMeBtnOnStartup()
@@ -40,6 +42,10 @@ class ViewController: UIViewController {
     // MARK: - Variables & Constants
     let customBlue = UIColor(red: 39/255, green: 82/255, blue: 231/255, alpha: 1)
     let customBlack = UIColor(red: 17/255, green: 17/255, blue: 17/255, alpha: 1)
+    let customGray =  UIColor(red: 207/235, green: 207/235, blue: 207/235, alpha: 1)
+    
+    // to store the current active textfield
+     var activeTextField : UITextField? = nil
     
     enum ValidationResult {
         case success
@@ -85,23 +91,14 @@ class ViewController: UIViewController {
     }
 
     func showPopup(result: ValidationResult) {
-        if result == .success {
-            let successAlertController = UIAlertController(title: "Success", message: result.message, preferredStyle: .alert)
-            let nextAction = UIAlertAction(title: "Next", style: .default) { _ in
-                self.naviagteToHomeScreen()
-            }
-            successAlertController.addAction(nextAction)
-            present(successAlertController, animated: true, completion: nil)
-        } else {
-            let successAlertController = UIAlertController(title: "Error", message: result.message, preferredStyle: .alert)
-            let nextAction = UIAlertAction(title: "Ok", style: .default)
-            successAlertController.addAction(nextAction)
-            present(successAlertController, animated: true, completion: nil)
-        }
+        let successAlertController = UIAlertController(title: "Error", message: result.message, preferredStyle: .alert)
+        let nextAction = UIAlertAction(title: "Ok", style: .default)
+        successAlertController.addAction(nextAction)
+        present(successAlertController, animated: true, completion: nil)
     }
     
-    func naviagteToHomeScreen() {
-        self.performSegue(withIdentifier: "logInSuccess", sender: nil)
+    func navigateToScreen(_ identifier: String) {
+        self.performSegue(withIdentifier: identifier, sender: nil)
     }
     
     func isValidEmail(email: String) -> Bool {
@@ -130,11 +127,21 @@ class ViewController: UIViewController {
         return true
     }
     
-    
     // MARK: - IBActions
+    
+    @IBAction func closeBtnTapped(_ sender: UIButton) {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    
     @IBAction func signInBtnTapped(_ sender: UIButton) {
         let errorResult = validateFields(email: emailTextField.text ?? "", password: passwordTextField.text ?? "")
-        showPopup(result: errorResult)
+        
+        if errorResult == .success {
+            navigateToScreen("SignInVerification")
+        } else {
+            showPopup(result: errorResult)
+        }
     }
     
     @IBAction func rememberMeBtnTapped(_ sender: UIButton) {
@@ -177,15 +184,14 @@ class ViewController: UIViewController {
     
     @IBAction func emailTextFieldEditingEnd(_ sender: UITextField) {
         emailLabel.textColor = customBlack
-        sender.layer.borderColor = customBlack.cgColor
+        sender.layer.borderColor = customGray.cgColor
     }
     
     @IBAction func passTextFieldEditingEnd(_ sender: UITextField) {
         passwordLabel.textColor = customBlack
-        sender.layer.borderColor = customBlack.cgColor
+        sender.layer.borderColor = customGray.cgColor
     }
 }
-
 
 // MARK: - Text field Delegates
 extension ViewController: UITextFieldDelegate {
@@ -202,4 +208,5 @@ extension ViewController: UITextFieldDelegate {
         return true
     }
 }
+
 

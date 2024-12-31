@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 73;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXFileReference section */
@@ -14,25 +14,14 @@
 		CDC25A522CF98056007710F5 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				.swift,
 				Info.plist,
 			);
 			target = CDC25A3F2CF98054007710F5 /* CoinBase */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
-/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
-		CD0C61BF2D02D602009EA8BC /* PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet */ = {
-			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
-			buildPhase = CDC25A3C2CF98054007710F5 /* Sources */;
-			membershipExceptions = (
-				.swift,
-			);
-		};
-/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		CDC25A422CF98054007710F5 /* CoinBase */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (CDC25A522CF98056007710F5 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, CD0C61BF2D02D602009EA8BC /* PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = CoinBase; sourceTree = "<group>"; };
+		CDC25A422CF98054007710F5 /* CoinBase */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (CDC25A522CF98056007710F5 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = CoinBase; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +92,7 @@
 				};
 			};
 			buildConfigurationList = CDC25A3B2CF98054007710F5 /* Build configuration list for PBXProject "CoinBase" */;
+			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -111,7 +101,6 @@
 			);
 			mainGroup = CDC25A372CF98054007710F5;
 			minimizedProjectReferenceProxies = 1;
-			preferredProjectObjectVersion = 55;
 			productRefGroup = CDC25A412CF98054007710F5 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";

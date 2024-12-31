@@ -64,7 +64,6 @@ class ViewController3: UIViewController {
         guard let index = index else {
             return
         }
-       // delegate?.didUpdateRowData(at: index)
         returnIndex?(index)
     }
 }

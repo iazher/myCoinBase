@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CustomCell: UITableViewCell {
+class PortfolioItemCell: UITableViewCell {
 
     // MARK: - IBOutlets
     @IBOutlet weak var iconImageView: UIImageView!
@@ -24,8 +24,6 @@ class CustomCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        // add bottom padding to cells for spacing between cells
-//        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 24, right: 0))
     }
 
     func updateCells(model: PortfolioItem) {
