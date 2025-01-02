@@ -9,9 +9,12 @@ import UIKit
 
 class NewsTableViewCell: UITableViewCell {
 
+    //MARK: - IB Outlets
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var newsIcon: UIImageView!
     @IBOutlet weak var newsPreview: UILabel!
+    
+    //MARK: - Lifecycle Functions
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -19,10 +22,10 @@ class NewsTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
         // Configure the view for the selected state
     }
     
+    //MARK: - Helper Functions
     func setValues(model: NewsDataModel) {
         let fullText = "Decrypt • \(model.timeElapsed) • \(model.mode)"
         let attributedString = NSMutableAttributedString(string: fullText)
@@ -41,6 +44,5 @@ class NewsTableViewCell: UITableViewCell {
         
         newsPreview.text = model.articlePreview
         newsIcon.image = UIImage(named: model.newsIcon)
-        
     }
 }

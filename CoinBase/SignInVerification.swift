@@ -10,9 +10,7 @@ import UIKit
 class Verification: UIViewController {
     
     // MARK: - IB Outlets
-    
     @IBOutlet weak var submitBtn: UIButton!
-    
     @IBOutlet weak var helpBtn: UIButton! {
         didSet {
             helpBtn.layer.borderWidth = 1
@@ -30,11 +28,9 @@ class Verification: UIViewController {
     let customBorderGray = UIColor(red: 207/235, green: 207/235, blue: 207/235, alpha: 1).cgColor
     let customBlue = UIColor(red: 39/255, green: 82/255, blue: 231/255, alpha: 1)
     let customBlack = UIColor(red: 17/255, green: 17/255, blue: 17/255, alpha: 1)
-    
     let validationCode: String = "7754397"
     
     // MARK: - IB Actions
-
     @IBAction func verificationFieldEditingBegin(_ sender: UITextField) {
         //add functionality
         sender.layer.borderColor = customBlue.cgColor
@@ -56,10 +52,6 @@ class Verification: UIViewController {
         }
     }
     
-    @IBAction func helpBtnTapped(_ sender: UIButton) {
-        //maybe ????
-    }
-    
     //MARK: - Lifecycle Functions
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,7 +61,6 @@ class Verification: UIViewController {
     }
     
     // MARK: - Helper Functions
-    
     func navigateToScreen(_ identifier: String) {
         self.performSegue(withIdentifier: identifier, sender: nil)
     }
@@ -91,6 +82,7 @@ class Verification: UIViewController {
         }
 }
 
+//MARK: - Text Field Delegates
 extension Verification: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if string == "" {

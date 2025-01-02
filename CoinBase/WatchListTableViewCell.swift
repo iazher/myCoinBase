@@ -10,7 +10,6 @@ import UIKit
 class WatchListTableViewCell: UITableViewCell {
 
     //MARK: - IB Outlets
-    
     @IBOutlet weak var cellBorders: UIView!
     @IBOutlet weak var imageIcon: UIImageView!
     @IBOutlet weak var title: UILabel!
@@ -22,15 +21,15 @@ class WatchListTableViewCell: UITableViewCell {
     @IBOutlet weak var leadingConstraint: NSLayoutConstraint!
     @IBOutlet weak var trailingConstraint: NSLayoutConstraint!
     @IBOutlet weak var innerViewTrailing: NSLayoutConstraint!
+    @IBOutlet weak var topConstraint: NSLayoutConstraint!
+    @IBOutlet weak var spacerHeight: NSLayoutConstraint!
     
     //MARK: - Lifecycle Functions
-    
     override func awakeFromNib() {
         super.awakeFromNib()
     }
     
     //MARK: - Helper Functions
-    
     func setValues(model: WatchListModel) {
         title.text = model.title
         abbreviation.text = model.abbreviation
@@ -46,9 +45,10 @@ class WatchListTableViewCell: UITableViewCell {
     }
     
     func updateCellConstraints() {
-        self.leadingConstraint.constant = 24
-        self.trailingConstraint.constant = 24
+        self.leadingConstraint.constant = 0
+        self.trailingConstraint.constant = 0
+        self.topConstraint.constant = 3
         self.innerViewTrailing.constant = 0
-        self.layoutIfNeeded()
+        self.spacerHeight.constant = 27
     }
 }

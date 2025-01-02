@@ -48,13 +48,6 @@ class PolygonInformationTableViewCell: UITableViewCell {
     func registerCells() {
         polygonInfoCV.register(UINib(nibName: "PolygonInformationCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "PolygonInformationCollectionViewCell")
     }
-    
-    func setCVLayout() {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.minimumInteritemSpacing = 16 // Spacing between columns
-        polygonInfoCV.collectionViewLayout = layout
-    }
 }
 
 //MARK: Collection View Delegates
@@ -72,6 +65,7 @@ extension PolygonInformationTableViewCell: UICollectionViewDelegate, UICollectio
     }
 }
 
+//MARK: - Collection View Layout
 extension PolygonInformationTableViewCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (collectionView.frame.width)*0.89

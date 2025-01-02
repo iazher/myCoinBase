@@ -11,11 +11,10 @@ import Foundation
 class TwoStepVerification: UIViewController {
     
     //MARK: - IB Outlets
-    
     @IBOutlet weak var countryLabel: UILabel!
     @IBOutlet weak var phoneLabel: UILabel!
     @IBOutlet weak var countryCode: UILabel!
-    
+
     @IBOutlet weak var phoneTextField: UITextField! {
         didSet {
             setTextFieldBorders(textField: phoneTextField)
@@ -28,7 +27,7 @@ class TwoStepVerification: UIViewController {
             continueBtn.layer.cornerRadius = 8
         }
     }
- 
+    
     @IBOutlet weak var textFieldContainer: UIView! {
         didSet {
             textFieldContainer.layer.borderColor = customGray.cgColor
@@ -46,8 +45,8 @@ class TwoStepVerification: UIViewController {
             tableViewContainer.layer.borderWidth = 1
         }
     }
-    @IBOutlet weak var countryCodesTableView: UITableView!
     
+    @IBOutlet weak var countryCodesTableView: UITableView!
     
     //MARK: - Variables
     let countryCodes: [CountryCodesModel] = [
@@ -77,12 +76,9 @@ class TwoStepVerification: UIViewController {
     }
     
     //MARK: - IB Actions
-    
     @IBAction func closeBtnTapped(_ sender: UIButton) {
         navigationController?.popViewController(animated: true)
     }
-    
-   
     
     @IBAction func pullDownBtnTapped(_ sender: UIButton) {
         togglePullDown()
@@ -95,8 +91,8 @@ class TwoStepVerification: UIViewController {
         sender.layer.cornerRadius = 4
         sender.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner]
     }
+    
     @IBAction func continueBtnTapped(_ sender: UIButton) {
-        //navigate to next authentication screen (enter authentication code)
         navigateToScreen("2StepVerificationScreen2")
     }
     
@@ -131,6 +127,7 @@ class TwoStepVerification: UIViewController {
     }
 }
 
+//MARK: - Text Field Delegates
 extension TwoStepVerification: UITextFieldDelegate {
     // condition for user input:
     // 1. Numbers only
@@ -153,6 +150,7 @@ extension TwoStepVerification: UITextFieldDelegate {
     }
 }
 
+//MARK: - Table View Delegates
 extension TwoStepVerification: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return countryCodes.count
@@ -176,5 +174,4 @@ extension TwoStepVerification: UITableViewDelegate, UITableViewDataSource {
         countryCode.text = userSelectedCode
         togglePullDown()
     }
-    
 }

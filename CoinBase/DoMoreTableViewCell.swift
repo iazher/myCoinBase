@@ -9,13 +9,14 @@ import UIKit
 
 class DoMoreTableViewCell: UITableViewCell {
     
+    //MARK: - IB Outlets
     @IBOutlet weak var doMoreCV: UICollectionView! {
         didSet {
             registerCVCells()
-            setCVLayout()
         }
     }
     
+    //MARK: - Lifecycle Functions
     override func awakeFromNib() {
         super.awakeFromNib()
         doMoreCV.delegate = self
@@ -24,7 +25,6 @@ class DoMoreTableViewCell: UITableViewCell {
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
         // Configure the view for the selected state
     }
     
@@ -32,15 +32,9 @@ class DoMoreTableViewCell: UITableViewCell {
     func registerCVCells() {
         doMoreCV.register(UINib(nibName: "DoMoreCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "DoMoreCollectionViewCell")
     }
-    
-    func setCVLayout() {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.minimumInteritemSpacing = 16 // Spacing between columns
-        doMoreCV.collectionViewLayout = layout
-    }
 }
 
+//MARK: - Collection View Delegates
 extension DoMoreTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 2
@@ -54,6 +48,7 @@ extension DoMoreTableViewCell: UICollectionViewDelegate, UICollectionViewDataSou
     }
 }
 
+//MARK: - Collection View Layout
 extension DoMoreTableViewCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (collectionView.frame.width)*0.89

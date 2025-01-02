@@ -9,7 +9,6 @@ import Foundation
 
 class PortfolioItem {
     
-    // MARK: - Variables
     var iconName: String    // image view
     var itemName: String    // e.g: USD Coin
     var itemValue: String  // e.g: $0

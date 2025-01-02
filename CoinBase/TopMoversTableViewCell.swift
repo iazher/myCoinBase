@@ -13,7 +13,6 @@ class TopMoversTableViewCell: UITableViewCell {
     @IBOutlet weak var topMoversCV: UICollectionView! {
         didSet {
             registerCVCells()
-            setCVLayout()
         }
     }
     
@@ -38,8 +37,8 @@ class TopMoversTableViewCell: UITableViewCell {
             increase: "+6.50%"
         )
     ]
-    //MARK: - Lifecycle Functions
     
+    //MARK: - Lifecycle Functions
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -57,17 +56,9 @@ class TopMoversTableViewCell: UITableViewCell {
     func registerCVCells() {
         topMoversCV.register(UINib(nibName: "TopMoversCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "TopMoversCollectionViewCell")
     }
-    
-    func setCVLayout() {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.minimumInteritemSpacing = 16 // Spacing between columns
-        topMoversCV.collectionViewLayout = layout
-    }
 }
 
-//MARK: - CollectionView Delegates
-
+//MARK: - Collection View Delegates
 extension TopMoversTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return topMoversData.count
@@ -82,6 +73,7 @@ extension TopMoversTableViewCell: UICollectionViewDelegate, UICollectionViewData
     }
 }
 
+//MARK: - Collection View Layout
 extension TopMoversTableViewCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (collectionView.frame.width)*(138/352)

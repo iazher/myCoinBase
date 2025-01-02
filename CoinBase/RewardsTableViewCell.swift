@@ -9,12 +9,14 @@ import UIKit
 
 class RewardsTableViewCell: UITableViewCell {
 
+    //MARK: - IB Outlets
     @IBOutlet weak var rewardsImage: UIImageView! {
         didSet {
             rewardsImage.layer.cornerRadius = 10
         }
     }
     
+    //MARK: - Lifecycle Functions
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -25,5 +27,4 @@ class RewardsTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
 }

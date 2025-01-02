@@ -7,10 +7,17 @@
 
 import UIKit
 
-class ViewController2: UIViewController {
+class PortfolioScreen: UIViewController {
     
     // MARK: - IBOutlets
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableView: UITableView! {
+        didSet {
+            registerTableCells()
+            tableView.separatorStyle = .none
+            tableView.sectionHeaderTopPadding = 0
+            tableView.showsVerticalScrollIndicator = false
+        }
+    }
     @IBOutlet weak var portfolioBalanceLabel: UILabel!
     @IBOutlet weak var portfolioBalance: UILabel!
     
@@ -19,7 +26,7 @@ class ViewController2: UIViewController {
         PortfolioItem(
             iconName: "ic-test",
             itemName: "USD Coin",
-            itemValue: "$12.3",
+            itemValue: "$0.00",
             detail: "0 USDC"
         ),
         PortfolioItem(
@@ -31,55 +38,55 @@ class ViewController2: UIViewController {
         PortfolioItem(
             iconName: "ic-ox",
             itemName: "Ox",
-            itemValue: "$0",
+            itemValue: "$0.00",
             detail: "0 ZRX"
         ),
         PortfolioItem(
             iconName: "1INCH - 1INCH Token",
             itemName: "1Inch",
-            itemValue: "$0",
+            itemValue: "$0.00",
             detail: "0 1INC"
         ),
         PortfolioItem(
             iconName: "aAAVE - Aave AAVE",
             itemName: "Aave",
-            itemValue: "$0",
+            itemValue: "$0.00",
             detail: "0 AAVE"
         ),
         PortfolioItem(
             iconName: "ALGO - Algorand",
             itemName: "Algorand",
-            itemValue: "$0",
+            itemValue: "$0.00",
             detail: "0 ALGO"
         ),
         PortfolioItem(
-            iconName: "ic-ox",
-            itemName: "Ox",
-            itemValue: "$20",
-            detail: "0 ZRX"
+            iconName: "ampl",
+            itemName: "Ampleforth Governance",
+            itemValue: "$0.00",
+            detail: "0 FORTH"
         ),
         PortfolioItem(
             iconName: "1INCH - 1INCH Token",
             itemName: "1Inch",
-            itemValue: "$0",
+            itemValue: "$0.00",
             detail: "0 1INC"
         ),
         PortfolioItem(
             iconName: "ALGO - Algorand",
             itemName: "Algorand",
-            itemValue: "$10",
+            itemValue: "$10.00",
             detail: "0 ALGO"
         ),
         PortfolioItem(
             iconName: "ALGO - Algorand",
             itemName: "Algorand",
-            itemValue: "$0",
+            itemValue: "$0.00",
             detail: "0 ALGO"
         ),
         PortfolioItem(
             iconName: "MATIC - Matic Token",
             itemName: "Polygon",
-            itemValue: "$0",
+            itemValue: "$0.00",
             detail: "8.52889997 MATIC"
         ),
         PortfolioItem(
@@ -96,42 +103,32 @@ class ViewController2: UIViewController {
         )
     ]
     
-    // MARK: - Helper Functions
-    
+    //MARK: - Lifecycle Functions
     override func viewDidLoad() {
         tableView.delegate = self
         tableView.dataSource = self
         super.viewDidLoad()
-        portfolioBalanceSetup()
     }
     
+    // MARK: - Helper Functions
     func registerTableCells() {
-        //register custom cell
+        //custom cells
         tableView.register(UINib(nibName: "PortfolioItemCell", bundle: nil), forCellReuseIdentifier: "PortfolioItemCell")
   
-//        //register section header view
-//        onNetMinsTableView.register(UINib(nibName: "CustomHeader", bundle: nil), forHeaderFooterViewReuseIdentifier: "CustomHeader")
-//        
-        //table design
-        tableView.separatorStyle = .none
+        //custom headers
+        tableView.register(UINib(nibName: "PortfolioBalanceHeader", bundle: nil), forHeaderFooterViewReuseIdentifier: "PortfolioBalanceHeader")
     }
     
-    func portfolioBalanceSetup() {
-        portfolioBalanceLabel.textColor = UIColor(red: 112/235, green: 112/235, blue: 112/235, alpha: 100)
-        calculatePortfolioBalance()
-    }
-    
-    func calculatePortfolioBalance() {
+    func calculatePortfolioBalance() -> Double{
         var totalBalance: Double = 0.0
         for item in sampleData {
             let valueStr = item.itemValue.replacingOccurrences(of: "$", with: "")
             guard let valueNumeric = Double(valueStr) else {
-                return
+                return 0
             }
             totalBalance += valueNumeric
         }
-        let totalBalanceStr = String(format: "%.2f", totalBalance)
-        portfolioBalance.text = totalBalanceStr
+        return totalBalance
     }
     
     // navigates to next screen (displays cell information) based on the cell selected by user
@@ -157,9 +154,9 @@ class ViewController2: UIViewController {
         }
     }
 }
-    // MARK: - Delegate and Data source functions
 
-extension ViewController2: UITableViewDelegate, UITableViewDataSource{
+// MARK: - Table View Delegates
+extension PortfolioScreen: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return sampleData.count
@@ -170,14 +167,14 @@ extension ViewController2: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = UIView()
-        headerView.backgroundColor = view.backgroundColor
-        return headerView
+        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "PortfolioBalanceHeader") as? PortfolioBalanceHeader else {
+            return UIView()
+        }
+        header.setPortfolioBalance(balance: calculatePortfolioBalance())
+        header.backgroundConfiguration?.backgroundColor = .systemBackground
+        return header
     }
     
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 24
-    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "PortfolioItemCell") as? PortfolioItemCell else {
@@ -194,7 +191,8 @@ extension ViewController2: UITableViewDelegate, UITableViewDataSource{
     }
 }
 
-extension ViewController2: ViewController3Delegate {
+//MARK: - Custom Delegates
+extension PortfolioScreen: ViewController3Delegate {
     func didUpdateRowData(at index: Int) {
         let indexPath = IndexPath(row: index, section: 0)
         self.tableView.reloadRows(at: [indexPath], with: .automatic)

@@ -15,8 +15,7 @@ class PortfolioItemCell: UITableViewCell {
     @IBOutlet weak var valueLabel: UILabel!
     @IBOutlet weak var detailLabel: UILabel!
     
-    // MARK: - Helper functions
-    
+    //MARK: - Lifecycle Functions
     override func awakeFromNib() {
         super.awakeFromNib()
         super.selectionStyle = .none
@@ -26,6 +25,7 @@ class PortfolioItemCell: UITableViewCell {
         super.layoutSubviews()
     }
 
+    //MARK: - Helper Functions
     func updateCells(model: PortfolioItem) {
         iconImageView.image = UIImage(named: model.iconName)
         titleLabel.text = model.itemName

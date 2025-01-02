@@ -9,6 +9,7 @@ import UIKit
 
 class SignUpScreen: UIViewController {
     
+    //MARK: - IB Outlets
     @IBOutlet weak var scrollViewSignUp: UIScrollView!
     @IBOutlet weak var firstNameLabel: UILabel!
     @IBOutlet weak var lastNameLabel: UILabel!
@@ -32,16 +33,19 @@ class SignUpScreen: UIViewController {
             setTextFieldBorders(textField: signUpEmailTextField)
         }
     }
+    
     @IBOutlet weak var signUpPasswordTextField: UITextField! {
         didSet {
             setTextFieldBorders(textField: signUpPasswordTextField)
         }
     }
+    
     @IBOutlet weak var startBtn: UIButton! {
         didSet {
             startBtn.layer.cornerRadius = 8
         }
     }
+    
     @IBOutlet weak var eyeBtn: UIButton!
     @IBOutlet weak var agreementBtn: UIButton!
     @IBOutlet weak var looksGoodLabel: UILabel! {
@@ -49,6 +53,7 @@ class SignUpScreen: UIViewController {
             looksGoodLabel.isHidden = true
         }
     }
+    
     @IBOutlet weak var looksGoodCheckMark: UIImageView! {
         didSet {
             looksGoodCheckMark.isHidden = true
@@ -56,7 +61,6 @@ class SignUpScreen: UIViewController {
     }
     
     //MARK: - Variables
-    
     let customBlue = UIColor(red: 39/255, green: 82/255, blue: 231/255, alpha: 1)
     let customBlack = UIColor(red: 17/255, green: 17/255, blue: 17/255, alpha: 1)
     let customGray =  UIColor(red: 207/235, green: 207/235, blue: 207/235, alpha: 1)
@@ -94,7 +98,6 @@ class SignUpScreen: UIViewController {
     }
     
     //MARK: - IB Actions
-    
     @IBAction func closeBtnTapped(_ sender: UIButton) {
         navigationController?.popViewController(animated: true)
     }
@@ -121,6 +124,7 @@ class SignUpScreen: UIViewController {
             sender.tag = 0
         }
     }
+    
     @IBAction func startBtnTapped(_ sender: UIButton) {
         let errorResult = validateFields(email: signUpEmailTextField.text ?? "", password: signUpPasswordTextField.text ?? "")
         //handle success (navigate to next screen)
@@ -233,7 +237,7 @@ class SignUpScreen: UIViewController {
     }
 }
 
-//MARK: - Text Field Delegate and Keyboard Handling
+//MARK: - Text Field Delegates
 extension SignUpScreen: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if string == "" {

@@ -10,13 +10,11 @@ import UIKit
 class EmailVerification: UIViewController {
     
     //MARK: - IB Outlets
-    
     @IBOutlet weak var checkInboxBtn: UIButton! {
         didSet {
             checkInboxBtn.layer.cornerRadius = 8
         }
     }
-    
     @IBOutlet weak var resendEmailBtn: UIButton! {
         didSet {
             resendEmailBtn.layer.borderColor = UIColor(red: 207/235, green: 207/235, blue: 207/235, alpha: 1).cgColor
@@ -29,14 +27,13 @@ class EmailVerification: UIViewController {
             letsGoBtn.layer.cornerRadius = 8
         }
     }
-    
     @IBOutlet weak var doneBtn: UIButton! {
         didSet {
             doneBtn.layer.cornerRadius = 8
         }
     }
-    //MARK: - Action Outlets
     
+    //MARK: - Action Outlets
     @IBAction func closeBtnTapped(_ sender: UIButton) {
         navigationController?.popViewController(animated: true)
     }

@@ -9,8 +9,8 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    //MARK: - IB Outlets
     @IBOutlet weak var scrollViewSignIn: UIScrollView!
-    // IBoutlet
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var emailTextField: UITextField! {
         didSet {
@@ -31,6 +31,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var rememberMeButton: UIButton!
     @IBOutlet weak var eyebtn: UIButton!
     
+    //MARK: - Lifecycle Functions
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.isNavigationBarHidden = true
@@ -128,7 +129,6 @@ class ViewController: UIViewController {
     }
     
     // MARK: - IBActions
-    
     @IBAction func closeBtnTapped(_ sender: UIButton) {
         navigationController?.popViewController(animated: true)
     }
@@ -171,7 +171,6 @@ class ViewController: UIViewController {
     }
     
     // MARK: - Textfield actions
-    
     @IBAction func emailTextFieldEditingBegin(_ sender: UITextField) {
         emailLabel.textColor = customBlue
         sender.layer.borderColor = customBlue.cgColor

@@ -15,6 +15,8 @@ class HomeScreen: UIViewController {
             tableViewRegistrations()
             homeTableView.separatorStyle = .none
             homeTableView.allowsSelection = false
+            homeTableView.sectionHeaderTopPadding = 0
+            homeTableView.showsVerticalScrollIndicator = false
         }
     }
     
@@ -201,7 +203,13 @@ extension HomeScreen: UITableViewDelegate, UITableViewDataSource {
         default:
             return nil
         }
+        header.backgroundConfiguration?.backgroundColor = .systemBackground
         return header
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let footer = UIView()
+        return footer
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -212,6 +220,9 @@ extension HomeScreen: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        if section == 7 {
+            return 56
+        }
         return 32
     }
     

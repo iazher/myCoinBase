@@ -9,6 +9,7 @@ import UIKit
 
 class LearnAboutPolygonTableViewCell: UITableViewCell {
 
+    //MARK: - Lifecycle Functions
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -19,5 +20,4 @@ class LearnAboutPolygonTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
 }

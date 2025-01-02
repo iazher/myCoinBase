@@ -11,7 +11,6 @@ class NewUserAuthentication: UIViewController {
     
     //MARK: - IB Outlets
     @IBOutlet weak var codeLabel: UILabel!
-    
     @IBOutlet weak var codeTextField: UITextField! {
         didSet {
             setTextFieldBorders(textField: codeTextField)
@@ -36,7 +35,6 @@ class NewUserAuthentication: UIViewController {
     let customGray =  UIColor(red: 207/235, green: 207/235, blue: 207/235, alpha: 1)
     let customBlue = UIColor(red: 39/255, green: 82/255, blue: 231/255, alpha: 1)
     let customBlack = UIColor(red: 17/255, green: 17/255, blue: 17/255, alpha: 1)
-   
     let codeToMatch: String = "7215706" //compare user code to this code
     
     //MARK: - Lifecycle Functions
@@ -46,8 +44,6 @@ class NewUserAuthentication: UIViewController {
     }
     
     //MARK: - IB Actions
-    
-    
     @IBAction func closeBtnTapped(_ sender: UIButton) {
         navigationController?.popViewController(animated: true)
     }
@@ -75,7 +71,6 @@ class NewUserAuthentication: UIViewController {
     }
     
     //MARK: - Helper Functions
-    
     func navigateToScreen(_ identifier: String) {
         self.performSegue(withIdentifier: identifier, sender: nil)
     }
@@ -95,6 +90,7 @@ class NewUserAuthentication: UIViewController {
     
 }
 
+//MARK: - TextField Delegates
 extension NewUserAuthentication: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if string == "" {

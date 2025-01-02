@@ -9,10 +9,11 @@ import UIKit
 
 class CountryCodesTableViewCell: UITableViewCell {
 
+    //MARK: - IB Outlets
     @IBOutlet weak var countryName: UILabel!
-    
     @IBOutlet weak var countryCode: UILabel!
     
+    //MARK: - Lifecycle Functions
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -24,9 +25,9 @@ class CountryCodesTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    //MARK: - Helper Functions
     func setValues(model: CountryCodesModel) {
         countryName.text = model.countryName
         countryCode.text = model.countryCode
     }
-    
 }
