@@ -33,6 +33,7 @@ class EmailVerification: UIViewController {
         }
     }
     
+
     //MARK: - Action Outlets
     @IBAction func closeBtnTapped(_ sender: UIButton) {
         navigationController?.popViewController(animated: true)
@@ -51,7 +52,8 @@ class EmailVerification: UIViewController {
     }
     
     @IBAction func doneBtnTapped(_ sender: UIButton) {
-        navigateToScreen("2StepVerificationScreen1")
+        UserDefaults.standard.set(true, forKey: "LoggedIn")
+        navigateToScreen("SignUpSuccess")
     }
     
     //MARK: - Helper Functions

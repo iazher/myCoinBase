@@ -135,24 +135,6 @@ class PortfolioScreen: UIViewController {
     func navigateToScreen(_ identifier: String) {
         self.performSegue(withIdentifier: identifier, sender: nil)
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "TableViewNextScreen" {
-            if let indexPath = self.tableView.indexPathForSelectedRow {
-                if let destinationVC = segue.destination as? ViewController3 {
-                    destinationVC.delegate = self
-                    destinationVC.index = indexPath.row
-                    destinationVC.indexPath = indexPath // for closure
-                    let cellData = sampleData[indexPath.row]
-                    destinationVC.initModel(model: cellData)
-                    destinationVC.returnIndex = { (index) in
-                        let indexPath = IndexPath(row: index, section: 0)
-                        self.tableView.reloadRows(at: [indexPath], with: .automatic)
-                    }
-                }
-            }
-        }
-    }
 }
 
 // MARK: - Table View Delegates
@@ -188,13 +170,5 @@ extension PortfolioScreen: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.navigateToScreen("TableViewNextScreen")
-    }
-}
-
-//MARK: - Custom Delegates
-extension PortfolioScreen: ViewController3Delegate {
-    func didUpdateRowData(at index: Int) {
-        let indexPath = IndexPath(row: index, section: 0)
-        self.tableView.reloadRows(at: [indexPath], with: .automatic)
     }
 }

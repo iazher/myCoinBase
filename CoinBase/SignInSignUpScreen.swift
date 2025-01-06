@@ -21,7 +21,6 @@ class SignInSignUpScreen: UIViewController {
     //MARK: - Lifecycle functions
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.isNavigationBarHidden = true
     }
     
     //MARK: - IB Actions

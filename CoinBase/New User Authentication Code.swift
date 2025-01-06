@@ -54,7 +54,7 @@ class NewUserAuthentication: UIViewController {
     @IBAction func continueBtnTapped(_ sender: UIButton) {
         //navigate to home screen if code matches
         if codeTextField.text == randomCode {
-            navigateToScreen("SignUpSuccess")
+            navigateToScreen("EmailVerificationScreen1")
         } else {
             showPopup()
             randomCode = generateRandomCode()

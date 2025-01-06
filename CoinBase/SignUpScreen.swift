@@ -209,7 +209,7 @@ class SignUpScreen: UIViewController {
     
     func showPopup(result: ValidationResult) {
         if result == .success {
-            navigateToScreen("EmailVerificationScreen1")
+            navigateToScreen("TwoStepVerification")
         } else {
             let successAlertController = UIAlertController(title: "Error", message: result.message, preferredStyle: .alert)
             let nextAction = UIAlertAction(title: "Ok", style: .default)

@@ -248,6 +248,7 @@ extension SettingsScreen: SecuritySectionDelegate {
 
 extension SettingsScreen: SignOutBtnDelegate {
     func signOut() {
+        UserDefaults.standard.set(false, forKey: "LoggedIn")
         self.performSegue(withIdentifier: "BackToSignIn", sender: nil)
     }
 }

@@ -41,6 +41,7 @@ class Verification: UIViewController {
     
     @IBAction func submitBtnTapped(_ sender: UIButton) {
         if verificationTextField.text == validationCode {
+            UserDefaults.standard.set(true, forKey: "LoggedIn")
             navigateToScreen("SignInSuccess")
         } else {
             showPopup()
