@@ -40,7 +40,7 @@ class WatchListTableViewCell: UITableViewCell {
     
     func setViewBorders() {
         cellBorders.layer.cornerRadius = 10
-        cellBorders.layer.borderColor = UIColor(named: "Border custom gray")?.cgColor
+        cellBorders.layer.borderColor = UIColor(named: "Custom border gray")?.cgColor
         cellBorders.layer.borderWidth = 1
     }
     

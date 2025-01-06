@@ -14,7 +14,7 @@ class PaymentButtonTVCell: UITableViewCell {
         didSet {
             actionBtn.layer.cornerRadius = 8
             actionBtn.layer.borderWidth = 1
-            actionBtn.layer.borderColor = UIColor(named: "Border custom gray")?.cgColor
+            actionBtn.layer.borderColor = UIColor(named: "Custom border gray")?.cgColor
             actionBtn.layer.masksToBounds = true
         }
     }

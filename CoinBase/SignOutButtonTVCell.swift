@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol SignOutBtnDelegate {
+    func signOut()
+}
+
 class SignOutButtonTVCell: UITableViewCell {
 
     //MARK: - IB Outlets
@@ -15,9 +19,12 @@ class SignOutButtonTVCell: UITableViewCell {
         didSet {
             signOutBtn.layer.cornerRadius = 8
             signOutBtn.layer.borderWidth = 1
-            signOutBtn.layer.borderColor = UIColor(named: "Border custom gray")?.cgColor
+            signOutBtn.layer.borderColor = UIColor(named: "Custom border gray")?.cgColor
         }
     }
+    
+    //MARK: - Variables
+    var delegate: SignOutBtnDelegate?
     
     //MARK: - Lifecycle Functions
     override func awakeFromNib() {
@@ -27,8 +34,11 @@ class SignOutButtonTVCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
         // Configure the view for the selected state
+    }
+    
+    @IBAction func signOutBtnTapped(_ sender: UIButton) {
+        delegate?.signOut()
     }
     
     //MARK: - Helper Functions

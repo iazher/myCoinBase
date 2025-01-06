@@ -27,6 +27,9 @@
                         <state key="normal" title="Sign Out">
                             <color key="titleColor" red="0.88627450980392153" green="0.36078431372549019" blue="0.36078431372549019" alpha="1" colorSpace="calibratedRGB"/>
                         </state>
+                        <connections>
+                            <action selector="signOutBtnTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="nNE-Bd-Oo2"/>
+                        </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PgY-IZ-cfO">
                         <rect key="frame" x="0.0" y="74" width="320" height="20"/>

@@ -40,69 +40,76 @@ class PricesScreen: UIViewController {
             abbreviation: "BTC • Tradable",
             iconName: "BTC - Bitcoin",
             amount: "$36,701.78",
-            increase: "-6.28%"
+            increase: "-6.28%",
+            filters: ["Tradable", "Losers"]
         ),
         WatchListModel(
             title: "Bitcoin Cash",
             abbreviation: "BCH • Tradable",
             iconName: "bch",
             amount: "$665.25",
-            increase: "-9.2%"
+            increase: "-9.2%",
+            filters: ["Tradable", "Losers"]
         ),
         WatchListModel(
             title: "Ethereum",
             abbreviation: "ETH",
             iconName: "ETH - Ethereum Token",
             amount: "$2,629.70",
-            increase: "-8.12%"
+            increase: "-8.12%",
+            filters: ["Losers"]
         ),
         WatchListModel(
             title: "Ethereum Classic",
             abbreviation: "ETC",
             iconName: "ETC - Binance-Peg Ethereum Classic",
             amount: "$63.94",
-            increase: "-9.56%"
+            increase: "-9.56%",
+            filters: ["Losers"]
         ),
         WatchListModel(
             title: "Litecoin",
             abbreviation: "LTC",
             iconName: "LTC - Litecoin Token",
             amount: "$175.76",
-            increase: "-10.01%"
+            increase: "-10.01%",
+            filters: ["Losers"]
         ),
         WatchListModel(
             title: "0x",
             abbreviation: "BCH",
             iconName: "ic-ox",
             amount: "$1.07",
-            increase: "-10.75%"
+            increase: "-10.75%",
+            filters: ["Losers"]
         ),
         WatchListModel(
             title: "Basic Attention Token",
             abbreviation: "BAT",
             iconName: "BAT - Basic Attention Token",
             amount: "$0.75",
-            increase: "-10.35%"
+            increase: "-10.35%",
+            filters: ["Losers"]
         ),
         WatchListModel(
             title: "0x",
             abbreviation: "BCH",
             iconName: "ic-ox",
             amount: "$1.07",
-            increase: "+10.75%"
+            increase: "+10.75%",
+            filters: ["Gainers"]
         ),
         WatchListModel(
             title: "Basic Attention Token",
             abbreviation: "BAT",
             iconName: "BAT - Basic Attention Token",
             amount: "$0.75",
-            increase: "+10.35%"
+            increase: "+10.35%",
+            filters: ["Gainers"]
         )
     ]
     
-    var gainers: [WatchListModel] = []
-    var losers: [WatchListModel] = []
-    var tradableItems: [WatchListModel] = []
+    var filteredData: [WatchListModel] = []
     
     //MARK: - Lifecycle Functions
     override func viewDidLoad() {
@@ -113,22 +120,12 @@ class PricesScreen: UIViewController {
         itemsTV.delegate = self
         itemsTV.dataSource = self
         
-        gainers = filterGains(from: items)
-        losers = filterLosses(from: items)
-        tradableItems = filterTradableItems(from: items)
+        filteredData = items
     }
     
-    //MARK: - Helper Functions
-    func filterGains(from watchList: [WatchListModel]) -> [WatchListModel] {
-        return watchList.filter { $0.increase.contains("+") }
-    }
-
-    func filterLosses(from watchList: [WatchListModel]) -> [WatchListModel] {
-        return watchList.filter { $0.increase.contains("-") }
-    }
-    
-    func filterTradableItems(from watchList: [WatchListModel]) -> [WatchListModel] {
-        return watchList.filter { $0.abbreviation.contains("Tradable") }
+    //MARK: - Helper Functions    
+    func filterItems(filterType: String, from watchList: [WatchListModel]) -> [WatchListModel] {
+        return watchList.filter { $0.filters.contains(filterType) }
     }
 }
 
@@ -163,6 +160,10 @@ extension PricesScreen: UICollectionViewDelegate, UICollectionViewDataSource, UI
         // Update the selected cell
         if let selectedCell = collectionView.cellForItem(at: indexPath) as? ItemsFiltersCollectionViewCell {
                 selectedCell.setSelectedState()
+            guard let filterName = selectedCell.filterName.text else {
+                    return
+                }
+                filteredData = filterItems(filterType: filterName, from: items)
         }
         
         switch (indexPath.row) {
@@ -200,17 +201,7 @@ extension PricesScreen: UICollectionViewDelegate, UICollectionViewDataSource, UI
 //MARK: - Table View Delegates
 extension PricesScreen: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        var count = 0
-        if isAssets {
-            count = items.count
-        } else if isTradable {
-            count = tradableItems.count
-        } else if isGainers {
-            count = gainers.count
-        } else if isLosers {
-            count = losers.count
-        }
-        return count
+        return filteredData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -219,16 +210,7 @@ extension PricesScreen: UITableViewDelegate, UITableViewDataSource {
         }
         cell.updateCellConstraints()
         cell.layoutIfNeeded()
-        
-        if isAssets {
-            cell.setValues(model: items[indexPath.row])
-        } else if isTradable {
-            cell.setValues(model: tradableItems[indexPath.row])
-        } else if isGainers {
-            cell.setValues(model: gainers[indexPath.row])
-        } else if isLosers {
-            cell.setValues(model: losers[indexPath.row])
-        }
+        cell.setValues(model: filteredData[indexPath.row])
         return cell
     }
 }

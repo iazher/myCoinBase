@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Foundation
 
 class NewUserAuthentication: UIViewController {
     
@@ -25,22 +26,24 @@ class NewUserAuthentication: UIViewController {
     
     @IBOutlet weak var resendBtn: UIButton! {
         didSet {
-            resendBtn.layer.borderColor = customGray.cgColor
+            resendBtn.layer.borderColor = customBorderGray?.cgColor
             resendBtn.layer.borderWidth = 1
             resendBtn.layer.cornerRadius = 8
         }
     }
     
     //MARK: - Variables
-    let customGray =  UIColor(red: 207/235, green: 207/235, blue: 207/235, alpha: 1)
-    let customBlue = UIColor(red: 39/255, green: 82/255, blue: 231/255, alpha: 1)
-    let customBlack = UIColor(red: 17/255, green: 17/255, blue: 17/255, alpha: 1)
-    let codeToMatch: String = "7215706" //compare user code to this code
+    let customBorderGray =  UIColor(named: "Custom border gray")
+    let customBlue = UIColor(named: "Custom blue")
+    let customBlack = UIColor(named: "Custom black")
+    var randomCode: String = ""
     
     //MARK: - Lifecycle Functions
     override func viewDidLoad() {
         super.viewDidLoad()
         codeTextField.delegate = self
+        randomCode = generateRandomCode()
+        print(randomCode)
     }
     
     //MARK: - IB Actions
@@ -50,23 +53,27 @@ class NewUserAuthentication: UIViewController {
     
     @IBAction func continueBtnTapped(_ sender: UIButton) {
         //navigate to home screen if code matches
-        if codeTextField.text == codeToMatch {
+        if codeTextField.text == randomCode {
             navigateToScreen("SignUpSuccess")
         } else {
             showPopup()
+            randomCode = generateRandomCode()
+            print(randomCode)
             codeTextField.text = ""
             codeTextField.becomeFirstResponder()
         }
     }
     
     @IBAction func resendBtnTapped(_ sender: UIButton) {
+        randomCode = generateRandomCode()
+        print(randomCode)
         codeTextField.becomeFirstResponder()
         codeTextField.text = ""
     }
     
     @IBAction func textFieldEditingBegin(_ sender: UITextField) {
         codeLabel.textColor = customBlue
-        sender.layer.borderColor = customBlue.cgColor
+        sender.layer.borderColor = customBlue?.cgColor
         sender.layer.borderWidth = 2
     }
     
@@ -78,7 +85,7 @@ class NewUserAuthentication: UIViewController {
     func setTextFieldBorders(textField: UITextField) {
         textField.layer.cornerRadius = 4
         textField.layer.borderWidth = 1
-        textField.layer.borderColor = customGray.cgColor
+        textField.layer.borderColor = customBorderGray?.cgColor
     }
     
     func showPopup() {
@@ -88,6 +95,11 @@ class NewUserAuthentication: UIViewController {
         present(alertController, animated: true, completion: nil)
     }
     
+    func generateRandomCode() -> String {
+        // Default to 1000000 if nil
+            return String((1000000...9999999).randomElement() ?? 1000000)
+    }
+
 }
 
 //MARK: - TextField Delegates

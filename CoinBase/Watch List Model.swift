@@ -13,12 +13,14 @@ class WatchListModel {
     var iconName: String
     var amount: String
     var increase: String
+    var filters: [String] = []
     
-    init(title: String, abbreviation: String, iconName: String, amount: String, increase: String) {
+    init(title: String, abbreviation: String, iconName: String, amount: String, increase: String, filters: [String]) {
         self.title = title
         self.abbreviation = abbreviation
         self.iconName = iconName
         self.amount = amount
         self.increase = increase
+        self.filters = filters
     }
 }

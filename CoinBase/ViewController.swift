@@ -16,7 +16,7 @@ class ViewController: UIViewController {
         didSet {
             emailTextField.layer.cornerRadius = 4
             emailTextField.layer.borderWidth = 1
-            emailTextField.layer.borderColor = UIColor(red: 207/255, green: 207/255, blue: 207/255, alpha: 1).cgColor
+            emailTextField.layer.borderColor = UIColor(named: "Custom border gray")?.cgColor
         }
     }
     @IBOutlet weak var passwordLabel: UILabel!
@@ -24,12 +24,20 @@ class ViewController: UIViewController {
         didSet {
             passwordTextField.layer.cornerRadius = 4
             passwordTextField.layer.borderWidth = 1
-            passwordTextField.layer.borderColor = UIColor(red: 207/255, green: 207/255, blue: 207/255, alpha: 1).cgColor
+            passwordTextField.layer.borderColor = UIColor(named: "Custom border gray")?.cgColor
         }
     }
-    @IBOutlet weak var signInButton: UIButton!
+    @IBOutlet weak var signInButton: UIButton! {
+        didSet {
+            signInButton.layer.cornerRadius = 8
+        }
+    }
     @IBOutlet weak var rememberMeButton: UIButton!
     @IBOutlet weak var eyebtn: UIButton!
+    
+    //MARK: - Variables
+    let userEmail = "janedoe@gmail.com"
+    let userPassword = "Abc1234!"
     
     //MARK: - Lifecycle Functions
     override func viewDidLoad() {
@@ -41,17 +49,17 @@ class ViewController: UIViewController {
     }
     
     // MARK: - Variables & Constants
-    let customBlue = UIColor(red: 39/255, green: 82/255, blue: 231/255, alpha: 1)
-    let customBlack = UIColor(red: 17/255, green: 17/255, blue: 17/255, alpha: 1)
-    let customGray =  UIColor(red: 207/235, green: 207/235, blue: 207/235, alpha: 1)
-    
-    // to store the current active textfield
-     var activeTextField : UITextField? = nil
+    let customBlue = UIColor(named: "Custom blue")
+    let customBlack = UIColor(named: "Custom black")
+    let customBorderGray =  UIColor(named: "Custom border gray")
+
     
     enum ValidationResult {
         case success
         case invalidEmail
         case invalidPassword
+        case incorrectEmail
+        case incorrectPass
         
         var message: String {
             switch self {
@@ -61,6 +69,10 @@ class ViewController: UIViewController {
                 return "Invalid Email"
             case .invalidPassword:
                 return "Invalid Password"
+            case .incorrectEmail:
+                return "Incorrect Email"
+            case .incorrectPass:
+                return "Incorrect Password"
             }
         }
     }
@@ -76,21 +88,39 @@ class ViewController: UIViewController {
     }
 
     func validateFields(email: String, password: String) -> ValidationResult {
-        if isValidEmail(email: email) {
-            if isValidPass(password: password) {
-                return .success
-            } else {
-                passwordTextField.text = ""
-                passwordTextField.becomeFirstResponder()
-                return .invalidPassword
+        if email.isValidEmail() { //valid email
+            if isCorrectEmail(inputEmail: email) {  //correct email
+                if password.isValidPassword() {    //valid pass
+                    if isCorrectPass(inputPass: password) {
+                        return .success
+                    } else {    //correct pass
+                        passwordTextField.text = ""
+                        passwordTextField.becomeFirstResponder()
+                        return .incorrectPass
+                    }
+                } else {    //incorrect pass
+                    passwordTextField.text = ""
+                    passwordTextField.becomeFirstResponder()
+                    return .invalidPassword
+                }
+            } else {    //incorrect email
+                return .incorrectEmail
             }
-        } else {
+        } else {    //invalid email
             emailTextField.text = ""
             emailTextField.becomeFirstResponder()
             return .invalidEmail
         }
     }
-
+    
+    func isCorrectEmail(inputEmail: String) -> Bool {
+        return inputEmail == userEmail
+    }
+    
+    func isCorrectPass(inputPass: String) -> Bool {
+        return inputPass == userPassword
+    }
+    
     func showPopup(result: ValidationResult) {
         let successAlertController = UIAlertController(title: "Error", message: result.message, preferredStyle: .alert)
         let nextAction = UIAlertAction(title: "Ok", style: .default)
@@ -130,9 +160,8 @@ class ViewController: UIViewController {
     
     // MARK: - IBActions
     @IBAction func closeBtnTapped(_ sender: UIButton) {
-        navigationController?.popViewController(animated: true)
+        navigationController?.popToRootViewController(animated: true)
     }
-    
     
     @IBAction func signInBtnTapped(_ sender: UIButton) {
         let errorResult = validateFields(email: emailTextField.text ?? "", password: passwordTextField.text ?? "")
@@ -173,22 +202,22 @@ class ViewController: UIViewController {
     // MARK: - Textfield actions
     @IBAction func emailTextFieldEditingBegin(_ sender: UITextField) {
         emailLabel.textColor = customBlue
-        sender.layer.borderColor = customBlue.cgColor
+        sender.layer.borderColor = customBlue?.cgColor
     }
     
     @IBAction func passwordTextFieldEditingBegin(_ sender: UITextField) {
         passwordLabel.textColor = customBlue
-        sender.layer.borderColor = customBlue.cgColor
+        sender.layer.borderColor = customBlue?.cgColor
     }
     
     @IBAction func emailTextFieldEditingEnd(_ sender: UITextField) {
         emailLabel.textColor = customBlack
-        sender.layer.borderColor = customGray.cgColor
+        sender.layer.borderColor = customBorderGray?.cgColor
     }
     
     @IBAction func passTextFieldEditingEnd(_ sender: UITextField) {
         passwordLabel.textColor = customBlack
-        sender.layer.borderColor = customGray.cgColor
+        sender.layer.borderColor = customBorderGray?.cgColor
     }
 }
 
@@ -208,4 +237,36 @@ extension ViewController: UITextFieldDelegate {
     }
 }
 
+extension String {
+    // Validates if the string is a valid email address
+    func isValidEmail() -> Bool {
+        let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+        let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
+        return emailPredicate.evaluate(with: self)
+    }
+    
+    /* Validates if the string meets password requirements
+     - At least one special character
+     - At least one uppercase letter
+     - At least one number */
+    func isValidPassword() -> Bool {
+        // Check for at least one special character
+        let specialCharacterRegex = ".*[^A-Za-z0-9].*"
+        let specialCharacterPredicate = NSPredicate(format: "SELF MATCHES %@", specialCharacterRegex)
+        let hasSpecialCharacter = specialCharacterPredicate.evaluate(with: self)
+        
+        // Check for at least one uppercase letter
+        let uppercaseRegex = ".*[A-Z].*"
+        let uppercasePredicate = NSPredicate(format: "SELF MATCHES %@", uppercaseRegex)
+        let hasUpperCase = uppercasePredicate.evaluate(with: self)
+        
+        // Check for at least one number
+        let hasNumbers = self.rangeOfCharacter(from: .decimalDigits) != nil
+        return hasSpecialCharacter && hasUpperCase && hasNumbers
+    }
+    
+    func capitalizeFirst() -> String {
+        return prefix(1).capitalized + dropFirst()
+    }
+}
 

@@ -30,7 +30,7 @@ class TwoStepVerification: UIViewController {
     
     @IBOutlet weak var textFieldContainer: UIView! {
         didSet {
-            textFieldContainer.layer.borderColor = customGray.cgColor
+            textFieldContainer.layer.borderColor = customBorderGray?.cgColor
             textFieldContainer.layer.borderWidth = 1
             textFieldContainer.layer.cornerRadius = 4
             textFieldContainer.clipsToBounds = true
@@ -41,7 +41,7 @@ class TwoStepVerification: UIViewController {
     
     @IBOutlet weak var tableViewContainer: UIView! {
         didSet {
-            tableViewContainer.layer.borderColor = customGray.cgColor
+            tableViewContainer.layer.borderColor = customBorderGray?.cgColor
             tableViewContainer.layer.borderWidth = 1
         }
     }
@@ -62,9 +62,9 @@ class TwoStepVerification: UIViewController {
         CountryCodesModel(countryName: "Japan", countryCode: "+81")
     ]
     
-    let customGray =  UIColor(red: 207/235, green: 207/235, blue: 207/235, alpha: 1)
-    let customBlue = UIColor(red: 39/255, green: 82/255, blue: 231/255, alpha: 1)
-    let customBlack = UIColor(red: 17/255, green: 17/255, blue: 17/255, alpha: 1)
+    let customBorderGray =  UIColor(named: "Custom border gray")
+    let customBlue = UIColor(named: "Custom blue")
+    let customBlack = UIColor(named: "Custom black")
     
     //MARK: - Lifecycle Functions
     override func viewDidLoad() {
@@ -86,7 +86,7 @@ class TwoStepVerification: UIViewController {
     
     @IBAction func phoneEditingBegin(_ sender: UITextField) {
         phoneLabel.textColor = customBlue
-        sender.layer.borderColor = customBlue.cgColor
+        sender.layer.borderColor = customBlue?.cgColor
         sender.layer.borderWidth = 3
         sender.layer.cornerRadius = 4
         sender.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner]
@@ -104,7 +104,7 @@ class TwoStepVerification: UIViewController {
     func setTextFieldBorders(textField: UITextField) {
         textField.layer.cornerRadius = 4
         textField.layer.borderWidth = 1
-        textField.layer.borderColor = customGray.cgColor
+        textField.layer.borderColor = customBorderGray?.cgColor
     }
     
     func addPadding () {

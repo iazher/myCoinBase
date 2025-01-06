@@ -28,7 +28,7 @@ class PromoTableViewCell: UITableViewCell {
     
     //MARK: - Helper Functions
     func setBorders() {
-        self.layer.borderColor = UIColor(named: "Border custom gray")?.cgColor
+        self.layer.borderColor = UIColor(named: "Custom border gray")?.cgColor
         self.layer.borderWidth = 1
         self.layer.cornerRadius = 10
     }

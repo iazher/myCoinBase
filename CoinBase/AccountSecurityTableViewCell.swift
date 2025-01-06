@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol SecuritySectionDelegate {
+    func showPopUp(message: String) 
+}
+
 class AccountSecurityTableViewCell: UITableViewCell {
     
     //MARK: - IB Outlets
@@ -14,6 +18,9 @@ class AccountSecurityTableViewCell: UITableViewCell {
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var securitySwitch: UISwitch!
     @IBOutlet weak var arrowBtn: UIButton!
+    
+    //MARK: - Variables
+    var delegate: SecuritySectionDelegate?
     
     //MARK: - Lifecycle Functions
     override func awakeFromNib() {
@@ -32,16 +39,7 @@ class AccountSecurityTableViewCell: UITableViewCell {
         //add functionality here
     }
     @IBAction func switchValueChanged(_ sender: UISwitch) {
-        //show popup 
-    }
-    
-    //MARK: - Helper Functions
-    func setData(model: AccountSecurityModel) {
-        title.text = model.title
-        additionalInfo.text = model.additionalInfo
-    }
-    
-    func getPopMessage() -> String {
+        //show popup
         var message: String
         switch(securitySwitch.isOn) {
         case true:
@@ -57,6 +55,12 @@ class AccountSecurityTableViewCell: UITableViewCell {
                 message = "User will not be asked for PIN/Face ID when signing in"
             }
         }
-        return message
+        delegate?.showPopUp(message: message)
+    }
+    
+    //MARK: - Helper Functions
+    func setData(model: AccountSecurityModel) {
+        title.text = model.title
+        additionalInfo.text = model.additionalInfo
     }
 }

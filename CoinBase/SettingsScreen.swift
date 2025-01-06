@@ -146,7 +146,7 @@ extension SettingsScreen: UITableViewDelegate, UITableViewDataSource {
                 cell.securitySwitch.isHidden = false
                 cell.arrowBtn.isHidden = true
             }
-            
+            cell.delegate = self
             cell.setData(model: settingsListItems[indexPath.row])
             return cell
         case 4:
@@ -154,6 +154,7 @@ extension SettingsScreen: UITableViewDelegate, UITableViewDataSource {
                 return SignOutButtonTVCell()
             }
             cell.setAppVersion(version: "9.26.4 (92604), production")
+            cell.delegate = self
             return cell
         default:
             return UITableViewCell()
@@ -234,5 +235,19 @@ extension SettingsScreen: UITableViewDelegate, UITableViewDataSource {
         } else {
             return UITableView.automaticDimension
         }
+    }
+}
+
+extension SettingsScreen: SecuritySectionDelegate {
+    func showPopUp(message: String) {
+        let alert = UIAlertController(title: "Notice", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
+}
+
+extension SettingsScreen: SignOutBtnDelegate {
+    func signOut() {
+        self.performSegue(withIdentifier: "BackToSignIn", sender: nil)
     }
 }

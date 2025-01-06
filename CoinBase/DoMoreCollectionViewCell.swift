@@ -27,7 +27,7 @@ class DoMoreCollectionViewCell: UICollectionViewCell {
     }
     
     func setCellBorders() {
-        self.layer.borderColor = UIColor(named: "Border custom gray")?.cgColor
+        self.layer.borderColor = UIColor(named: "Custom border gray")?.cgColor
         self.layer.borderWidth = 1
         self.layer.cornerRadius = 10
     }

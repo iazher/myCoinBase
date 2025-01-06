@@ -25,21 +25,18 @@ class Verification: UIViewController {
     }
     
     //MARK: - Variables
-    let customBorderGray = UIColor(red: 207/235, green: 207/235, blue: 207/235, alpha: 1).cgColor
-    let customBlue = UIColor(red: 39/255, green: 82/255, blue: 231/255, alpha: 1)
-    let customBlack = UIColor(red: 17/255, green: 17/255, blue: 17/255, alpha: 1)
+    let customBorderGray = UIColor(named: "Custom border gray")
+    let customBlue = UIColor(named: "Custom blue")
+    let customBlack = UIColor(named: "Custom black")
     let validationCode: String = "7754397"
     
     // MARK: - IB Actions
     @IBAction func verificationFieldEditingBegin(_ sender: UITextField) {
-        //add functionality
-        sender.layer.borderColor = customBlue.cgColor
+        sender.layer.borderColor = customBlue?.cgColor
     }
     
     @IBAction func verificationFieldEditingEnd(_ sender: UITextField) {
-        //add functionality
-        sender.layer.borderColor = customBlack.cgColor
-        
+        sender.layer.borderColor = customBlack?.cgColor
     }
     
     @IBAction func submitBtnTapped(_ sender: UIButton) {
@@ -66,9 +63,10 @@ class Verification: UIViewController {
     }
     
     func setBordersColors() {
-        verificationTextField.layer.borderColor = customBorderGray
-        helpBtn.layer.borderColor = customBorderGray
+        verificationTextField.layer.borderColor = customBorderGray?.cgColor
+        helpBtn.layer.borderColor = customBorderGray?.cgColor
     }
+    
     func roundBtnCorners() {
         submitBtn.layer.cornerRadius = 8
         helpBtn.layer.cornerRadius = 8

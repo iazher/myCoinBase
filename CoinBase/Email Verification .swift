@@ -17,7 +17,7 @@ class EmailVerification: UIViewController {
     }
     @IBOutlet weak var resendEmailBtn: UIButton! {
         didSet {
-            resendEmailBtn.layer.borderColor = UIColor(red: 207/235, green: 207/235, blue: 207/235, alpha: 1).cgColor
+            resendEmailBtn.layer.borderColor = UIColor(named: "Custom border gray")?.cgColor
             resendEmailBtn.layer.borderWidth = 1
             resendEmailBtn.layer.cornerRadius = 8
         }
@@ -39,7 +39,6 @@ class EmailVerification: UIViewController {
     }
     
     @IBAction func checkInboxBtnTapped(_ sender: UIButton) {
-        //navigate from here to next screen
         navigateToScreen("EmailVerificationScreen2")
     }
     
@@ -47,13 +46,12 @@ class EmailVerification: UIViewController {
         //add functionality here
     }
     
-    @IBAction func btnTapped(_ sender: UIButton) {
-        if sender == letsGoBtn {
-            navigateToScreen("EmailVerificationScreen3")
-        }
-        else if sender == doneBtn {
-            navigateToScreen("2StepVerificationScreen1")
-        }
+    @IBAction func letsGoBtnTapped(_ sender: UIButton) {
+        navigateToScreen("EmailVerificationScreen3")
+    }
+    
+    @IBAction func doneBtnTapped(_ sender: UIButton) {
+        navigateToScreen("2StepVerificationScreen1")
     }
     
     //MARK: - Helper Functions

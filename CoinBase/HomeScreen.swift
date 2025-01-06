@@ -21,14 +21,15 @@ class HomeScreen: UIViewController {
     }
     
     //MARK: - Variables
-    let customGray = UIColor(red: 112/235, green: 112/235, blue: 112/235, alpha: 1)
+    let portfolioInfoHeaderGray = UIColor(red: 112/235, green: 112/235, blue: 112/235, alpha: 1)
     
     let watchListData = [WatchListModel(
         title: "Bitcoin",
         abbreviation: "BTC",
         iconName: "BTC - Bitcoin",
         amount: "$38,650.31",
-        increase: "+3.88%"
+        increase: "+3.88%",
+        filters: []
     )]
     
     let newsData = [
@@ -188,7 +189,7 @@ extension HomeScreen: UITableViewDelegate, UITableViewDataSource {
         case 4:
             header.headerLabel.text = "Building an internet of blockchains"
             header.headerLabel.font = UIFont(name: "Helvetica", size: 18)
-            header.headerLabel.textColor = customGray
+            header.headerLabel.textColor = portfolioInfoHeaderGray
         case 5:
             header.headerLabel.text = "Rewards"
             header.headerLabel.font = UIFont(name: "Helvetica Bold", size: 20)

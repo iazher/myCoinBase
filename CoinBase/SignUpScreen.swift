@@ -61,12 +61,9 @@ class SignUpScreen: UIViewController {
     }
     
     //MARK: - Variables
-    let customBlue = UIColor(red: 39/255, green: 82/255, blue: 231/255, alpha: 1)
-    let customBlack = UIColor(red: 17/255, green: 17/255, blue: 17/255, alpha: 1)
-    let customGray =  UIColor(red: 207/235, green: 207/235, blue: 207/235, alpha: 1)
-   
-    // to store the current active textfield
-     var activeTextField : UITextField? = nil
+    let customBlue = UIColor(named: "Custom blue")
+    let customBlack = UIColor(named: "Custom black")
+    let customBorderGray =  UIColor(named: "Custom border gray")
     
     enum ValidationResult {
         case success
@@ -132,49 +129,47 @@ class SignUpScreen: UIViewController {
     }
     
     @IBAction func firstNameTextFieldEditingBegin(_ sender: UITextField) {
-        self.activeTextField = sender
         firstNameLabel.textColor = customBlue
-        sender.layer.borderColor = customBlue.cgColor
+        sender.layer.borderColor = customBlue?.cgColor
     }
     
     @IBAction func lastNameTextFieldEditingBegin(_ sender: UITextField) {
-        self.activeTextField = sender
         lastNameLabel.textColor = customBlue
-        sender.layer.borderColor = customBlue.cgColor
+        sender.layer.borderColor = customBlue?.cgColor
     }
     
     @IBAction func emailTextFieldEditingBegin(_ sender: UITextField) {
-        self.activeTextField = sender
         emailLabel.textColor = customBlue
-        sender.layer.borderColor = customBlue.cgColor
+        sender.layer.borderColor = customBlue?.cgColor
     }
     
     @IBAction func passwordTextFieldEditingBegin(_ sender: UITextField) {
-        self.activeTextField = sender
         passwordLabel.textColor = customBlue
-        sender.layer.borderColor = customBlue.cgColor
+        sender.layer.borderColor = customBlue?.cgColor
     }
     
     @IBAction func firstNameTextFieldEditingEnd(_ sender: UITextField) {
-        self.activeTextField = nil
+        let text = firstNameTextField.text
+        firstNameTextField.text = text?.capitalizeFirst()
         firstNameLabel.textColor = customBlack
-        sender.layer.borderColor = customGray.cgColor
+        sender.layer.borderColor = customBorderGray?.cgColor
     }
     
     @IBAction func lastNameTextFieldEditingEnd(_ sender: UITextField) {
-        self.activeTextField = nil
+        let text = lastNameTextField.text
+        lastNameTextField.text = text?.capitalizeFirst()
         lastNameLabel.textColor = customBlack
-        sender.layer.borderColor = customGray.cgColor
+        sender.layer.borderColor = customBorderGray?.cgColor
     }
     
     @IBAction func emailTextFieldEditingEnd(_ sender: UITextField) {
         emailLabel.textColor = customBlack
-        sender.layer.borderColor = customGray.cgColor
+        sender.layer.borderColor = customBorderGray?.cgColor
     }
     
     @IBAction func passTextFieldEditingEnd(_ sender: UITextField) {
         passwordLabel.textColor = customBlack
-        sender.layer.borderColor = customGray.cgColor
+        sender.layer.borderColor = customBorderGray?.cgColor
     }
     
     //MARK: - Helper Functions
@@ -183,9 +178,9 @@ class SignUpScreen: UIViewController {
     }
     
     func setTextFieldBorders(textField: UITextField) {
-            textField.layer.cornerRadius = 4
-            textField.layer.borderWidth = 1
-            textField.layer.borderColor = UIColor(red: 207/255, green: 207/255, blue: 207/255, alpha: 1).cgColor
+        textField.layer.cornerRadius = 4
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor(red: 207/255, green: 207/255, blue: 207/255, alpha: 1).cgColor
     }
     
     func agreementBtnSetUp() {
@@ -251,35 +246,5 @@ extension SignUpScreen: UITextFieldDelegate {
             }
         }
         return true
-    }
-}
-
-//MARK: - Validation using string extension
-extension String {
-    // Validates if the string is a valid email address
-    func isValidEmail() -> Bool {
-        let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
-        let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
-        return emailPredicate.evaluate(with: self)
-    }
-    
-    /* Validates if the string meets password requirements
-     - At least one special character
-     - At least one uppercase letter
-     - At least one number */
-    func isValidPassword() -> Bool {
-        // Check for at least one special character
-        let specialCharacterRegex = ".*[^A-Za-z0-9].*"
-        let specialCharacterPredicate = NSPredicate(format: "SELF MATCHES %@", specialCharacterRegex)
-        let hasSpecialCharacter = specialCharacterPredicate.evaluate(with: self)
-        
-        // Check for at least one uppercase letter
-        let uppercaseRegex = ".*[A-Z].*"
-        let uppercasePredicate = NSPredicate(format: "SELF MATCHES %@", uppercaseRegex)
-        let hasUpperCase = uppercasePredicate.evaluate(with: self)
-        
-        // Check for at least one number
-        let hasNumbers = self.rangeOfCharacter(from: .decimalDigits) != nil
-        return hasSpecialCharacter && hasUpperCase && hasNumbers
     }
 }

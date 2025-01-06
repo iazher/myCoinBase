@@ -20,7 +20,7 @@ class PolygonInformationCollectionViewCell: UICollectionViewCell {
         // Initialization code
         self.layer.cornerRadius = 10
         self.layer.borderWidth = 1
-        self.layer.borderColor = UIColor(named: "Border custom gray")?.cgColor
+        self.layer.borderColor = UIColor(named: "Custom border gray")?.cgColor
     }
 
     //MARK: - Helper Functions
