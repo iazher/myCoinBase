@@ -248,7 +248,13 @@ extension SettingsScreen: SecuritySectionDelegate {
 
 extension SettingsScreen: SignOutBtnDelegate {
     func signOut() {
+        //save state (not logged in)
         UserDefaults.standard.set(false, forKey: "LoggedIn")
-        self.performSegue(withIdentifier: "BackToSignIn", sender: nil)
+        
+        //reset root 
+        let rootVC:SignInSignUpScreen = self.storyboard?.instantiateViewController(withIdentifier: "SignInSignUpScreen") as! SignInSignUpScreen
+        let nc = UINavigationController(rootViewController: rootVC)
+        nc.viewControllers = [rootVC]
+        UIApplication.shared.keyWindow?.rootViewController = nc
     }
 }

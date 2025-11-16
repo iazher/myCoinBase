@@ -25,20 +25,20 @@ class SignInSignUpScreen: UIViewController {
     
     //MARK: - IB Actions
     @IBAction func getStartedBtnTapped(_ sender: UIButton) {
-        navigateToScreen("SignUpScreen")
+        //    navigateToScreen("SignUpScreen")
+        let vc = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "SignUpScreen") as? SignUpScreen
+        self.navigationController?.pushViewController(vc!, animated: true)
+        
     }
     
     @IBAction func signInBtnTapped(_ sender: UIButton) {
-        navigateToScreen("SignInScreen")
+        let vc = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "ViewController") as? ViewController
+        self.navigationController?.pushViewController(vc!, animated: true)
     }
     
     //MARK: - Helper Functions
     func roundBtnCorners() {
         getStartedBtn.layer.cornerRadius = 8
         getStartedBtn.clipsToBounds = true
-    }
-    
-    func navigateToScreen(_ identifier: String) {
-        self.performSegue(withIdentifier: identifier, sender: nil)
     }
 }

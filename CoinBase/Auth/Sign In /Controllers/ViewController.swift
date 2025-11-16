@@ -128,10 +128,6 @@ class ViewController: UIViewController {
         present(successAlertController, animated: true, completion: nil)
     }
     
-    func navigateToScreen(_ identifier: String) {
-        self.performSegue(withIdentifier: identifier, sender: nil)
-    }
-    
     func isValidEmail(email: String) -> Bool {
         let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
         let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
@@ -160,14 +156,15 @@ class ViewController: UIViewController {
     
     // MARK: - IBActions
     @IBAction func closeBtnTapped(_ sender: UIButton) {
-        navigationController?.popToRootViewController(animated: true)
+        navigationController?.popViewController(animated: true)
     }
     
     @IBAction func signInBtnTapped(_ sender: UIButton) {
         let errorResult = validateFields(email: emailTextField.text ?? "", password: passwordTextField.text ?? "")
         
         if errorResult == .success {
-            navigateToScreen("SignInVerification")
+            let vc = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "Verification") as? Verification
+            self.navigationController?.pushViewController(vc!, animated: true)
         } else {
             showPopup(result: errorResult)
         }

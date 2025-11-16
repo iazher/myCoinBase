@@ -93,14 +93,11 @@ class TwoStepVerification: UIViewController {
     }
     
     @IBAction func continueBtnTapped(_ sender: UIButton) {
-        navigateToScreen("2StepVerificationScreen2")
+        let vc = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "NewUserAuthentication") as? NewUserAuthentication
+        self.navigationController?.pushViewController(vc!, animated: true)
     }
     
     //MARK: - Helper Functions
-    func navigateToScreen(_ identifier: String) {
-        self.performSegue(withIdentifier: identifier, sender: nil)
-    }
-    
     func setTextFieldBorders(textField: UITextField) {
         textField.layer.cornerRadius = 4
         textField.layer.borderWidth = 1

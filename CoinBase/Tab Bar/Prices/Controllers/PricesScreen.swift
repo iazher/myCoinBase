@@ -110,6 +110,7 @@ class PricesScreen: UIViewController {
     ]
     
     var filteredData: [WatchListModel] = []
+    var selectedFilterIndex: Int = 0
     
     //MARK: - Lifecycle Functions
     override func viewDidLoad() {
@@ -142,7 +143,7 @@ extension PricesScreen: UICollectionViewDelegate, UICollectionViewDataSource, UI
         cell.setFilterName(name: filters[indexPath.row])
         
         //initial setting of the filters
-        if indexPath.row == 0 {
+        if indexPath.row == selectedFilterIndex {
             cell.setSelectedState()
         }
         return cell
@@ -150,49 +151,27 @@ extension PricesScreen: UICollectionViewDelegate, UICollectionViewDataSource, UI
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        // Reset all other cells to their default state
-        let filtersCount = collectionView.numberOfItems(inSection: 0)
-        for index in 0..<filtersCount {
-            if let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? ItemsFiltersCollectionViewCell {
-                cell.resetState()
-            }
+        if indexPath.row == selectedFilterIndex {
+            return
         }
+            
+        //update selected index
+        if let cell = collectionView.cellForItem(at: IndexPath(item: selectedFilterIndex, section: 0)) as? ItemsFiltersCollectionViewCell {
+            cell.resetState()
+        }
+        selectedFilterIndex = indexPath.row
+        
         // Update the selected cell
         if let selectedCell = collectionView.cellForItem(at: indexPath) as? ItemsFiltersCollectionViewCell {
-                selectedCell.setSelectedState()
+            selectedCell.setSelectedState()
             guard let filterName = selectedCell.filterName.text else {
-                    return
-                }
+                return
+            }
+            if filterName == "All assets" {
+                filteredData = items
+            } else {
                 filteredData = filterItems(filterType: filterName, from: items)
-        }
-        
-        switch (indexPath.row) {
-        case 0:
-            if isAssets {
-                return
             }
-            isAssets = true
-            isTradable = false; isLosers = false; isGainers = false
-        case 1:
-            if isTradable {
-                return
-            }
-            isTradable = true
-            isAssets = false; isLosers = false; isGainers = false
-        case 2:
-            if isGainers {
-                return
-            }
-            isGainers = true
-            isAssets = false; isTradable = false; isLosers = false
-        case 3:
-            if isLosers {
-                return
-            }
-            isLosers = true
-            isAssets = false; isTradable = false; isGainers = false
-        default:
-            print("no row")
         }
         itemsTV.reloadData()
     }

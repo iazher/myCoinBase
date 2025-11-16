@@ -40,7 +40,8 @@ class EmailVerification: UIViewController {
     }
     
     @IBAction func checkInboxBtnTapped(_ sender: UIButton) {
-        navigateToScreen("EmailVerificationScreen2")
+        let vc = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "EmailVerification2") as? EmailVerification
+        self.navigationController?.pushViewController(vc!, animated: true)
     }
     
     @IBAction func resendEmailBtnTapped(_ sender: UIButton) {
@@ -48,17 +49,18 @@ class EmailVerification: UIViewController {
     }
     
     @IBAction func letsGoBtnTapped(_ sender: UIButton) {
-        navigateToScreen("EmailVerificationScreen3")
+        //navigateToScreen("EmailVerificationScreen3")
+        
+        let vc = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "EmailVerification3") as? EmailVerification
+        self.navigationController?.pushViewController(vc!, animated: true)
     }
     
     @IBAction func doneBtnTapped(_ sender: UIButton) {
         UserDefaults.standard.set(true, forKey: "LoggedIn")
-        navigateToScreen("SignUpSuccess")
-    }
-    
-    //MARK: - Helper Functions
-    func navigateToScreen(_ identifier: String) {
-        self.performSegue(withIdentifier: identifier, sender: nil)
+        //navigateToScreen("SignUpSuccess")
+        
+        let vc = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "TabbarController") as? TabbarController
+        self.navigationController?.pushViewController(vc!, animated: true)
     }
 }
 

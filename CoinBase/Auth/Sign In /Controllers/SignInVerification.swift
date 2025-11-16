@@ -42,7 +42,8 @@ class Verification: UIViewController {
     @IBAction func submitBtnTapped(_ sender: UIButton) {
         if verificationTextField.text == validationCode {
             UserDefaults.standard.set(true, forKey: "LoggedIn")
-            navigateToScreen("SignInSuccess")
+            let vc = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "TabbarController") as? TabbarController
+            self.navigationController?.pushViewController(vc!, animated: true)
         } else {
             showPopup()
             verificationTextField.text = ""
@@ -59,10 +60,6 @@ class Verification: UIViewController {
     }
     
     // MARK: - Helper Functions
-    func navigateToScreen(_ identifier: String) {
-        self.performSegue(withIdentifier: identifier, sender: nil)
-    }
-    
     func setBordersColors() {
         verificationTextField.layer.borderColor = customBorderGray?.cgColor
         helpBtn.layer.borderColor = customBorderGray?.cgColor

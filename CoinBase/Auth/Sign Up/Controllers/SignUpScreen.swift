@@ -173,10 +173,6 @@ class SignUpScreen: UIViewController {
     }
     
     //MARK: - Helper Functions
-    func navigateToScreen(_ identifier: String) {
-        self.performSegue(withIdentifier: identifier, sender: nil)
-    }
-    
     func setTextFieldBorders(textField: UITextField) {
         textField.layer.cornerRadius = 4
         textField.layer.borderWidth = 1
@@ -209,7 +205,8 @@ class SignUpScreen: UIViewController {
     
     func showPopup(result: ValidationResult) {
         if result == .success {
-            navigateToScreen("TwoStepVerification")
+            let vc = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "TwoStepVerification") as? TwoStepVerification
+             self.navigationController?.pushViewController(vc!, animated: true)
         } else {
             let successAlertController = UIAlertController(title: "Error", message: result.message, preferredStyle: .alert)
             let nextAction = UIAlertAction(title: "Ok", style: .default)

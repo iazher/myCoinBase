@@ -54,7 +54,9 @@ class NewUserAuthentication: UIViewController {
     @IBAction func continueBtnTapped(_ sender: UIButton) {
         //navigate to home screen if code matches
         if codeTextField.text == randomCode {
-            navigateToScreen("EmailVerificationScreen1")
+            let vc = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "EmailVerification") as? EmailVerification
+            self.navigationController?.pushViewController(vc!, animated: true)
+            
         } else {
             showPopup()
             randomCode = generateRandomCode()
@@ -78,10 +80,6 @@ class NewUserAuthentication: UIViewController {
     }
     
     //MARK: - Helper Functions
-    func navigateToScreen(_ identifier: String) {
-        self.performSegue(withIdentifier: identifier, sender: nil)
-    }
-    
     func setTextFieldBorders(textField: UITextField) {
         textField.layer.cornerRadius = 4
         textField.layer.borderWidth = 1
