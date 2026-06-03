@@ -36,8 +36,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var eyebtn: UIButton!
     
     //MARK: - Variables
-    let userEmail = "janedoe@gmail.com"
-    let userPassword = "Abc1234!"
+    // Demo credentials for UI testing — no real backend
+    let userEmail = "demo@example.com"
+    let userPassword = "Demo1234!"
     
     //MARK: - Lifecycle Functions
     override func viewDidLoad() {
