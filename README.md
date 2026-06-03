@@ -130,6 +130,20 @@ CoinBase/
 
 ---
 
+## Known Limitations & Retrospective Notes
+
+myCoinBase was built during my first month of iOS development in my internship. With the benefit of experience, there are two things I would do differently now:
+
+**Credential storage** — the "Remember Me" feature persists email and password to `UserDefaults`, 
+which stores data in plaintext. In production this is never acceptable. In my subsequent 
+internship project (Raabt), I implemented a generic Keychain wrapper using the Security 
+framework to store all sensitive user data — session tokens, user profiles, and preferences — 
+securely and encrypted. That's the approach I would use here today.
+
+**Mock authentication** — sign-in validates against hardcoded credentials rather than a real 
+backend. This was intentional for a UI-focused clone project, but building Raabt gave me 
+experience with real API-driven auth flows, phone-based login, and token management.
+
 ## Author
 
 Iman Azher
