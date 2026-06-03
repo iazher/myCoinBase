@@ -185,7 +185,7 @@ extension SettingsScreen: UITableViewDelegate, UITableViewDataSource {
                 return nil
             }
             header.setUserName(name: "YuanPin, Ivy Xu")
-            header.setUserEmail(email: "ivy.xuyp@gmail.com")
+            header.setUserEmail(email: "user@example.com")
             header.backgroundConfiguration?.backgroundColor = .systemBackground
             return header
         } else {
